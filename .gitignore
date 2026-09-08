@@ -1,0 +1,15 @@
+# Claude Code
+CLAUDE.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors/IDEs
+.vscode/
+.idea/
+*.swp
+
+# Dependencies (if ever introduced)
+/node_modules/
+/vendor/
