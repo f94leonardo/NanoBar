@@ -1,0 +1,16 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - nanobar.php
+        - src/
+        - uninstall.php
+
+    excludePaths:
+        - vendor/
+        - node_modules/
+        - languages/
+
+    tmpDir: .phpstan-cache

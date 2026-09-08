@@ -1,0 +1,40 @@
+{
+    "name": "f94leonardo/nanobar",
+    "description": "Replaces WordPress's classic admin bar, on the frontend, with a compact, role-aware floating panel.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "f94leonardo"
+        }
+    ],
+    "require": {
+        "php": "^8.4"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.13",
+        "wp-coding-standards/wpcs": "^3.4",
+        "phpcsstandards/phpcsutils": "^1.2",
+        "phpcsstandards/phpcsextra": "^1.5",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+        "phpstan/phpstan": "^2.2",
+        "szepeviktor/phpstan-wordpress": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "NanoBar\\": "src/"
+        }
+    },
+    "scripts": {
+        "phpcs": "phpcs",
+        "phpcbf": "phpcbf",
+        "phpstan": "phpstan analyse"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

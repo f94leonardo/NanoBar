@@ -1,0 +1,52 @@
+// Block: .nanobar-viewport / .nanobar-preview-button — the live position preview.
+
+.nanobar-preview-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.nanobar-viewport {
+	position: relative;
+	width: 88%;
+	height: 132px;
+	border: 1px solid #dcdcde;
+	border-radius: 14px;
+	background: linear-gradient( 145deg, #f6f7f7, #fff );
+	box-shadow: inset 0 1px 2px rgba( 0, 0, 0, .04 );
+	overflow: hidden;
+	display: flex;
+	padding: 18px;
+
+	&__label {
+		position: absolute;
+		inset: 50% auto auto 50%;
+		transform: translate( -50%, -50% );
+		width: calc( 100% - 30px );
+		text-align: center;
+		font-size: 11px;
+		font-weight: 600;
+		color: #646970;
+		text-transform: uppercase;
+		letter-spacing: .45px;
+		pointer-events: none;
+	}
+}
+
+.nanobar-preview-button {
+	position: relative;
+	z-index: 1;
+	flex: 0 0 auto;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 3px 10px rgba( 0, 0, 0, .18 );
+	transition: all .2s ease;
+}
+
+@media ( max-width: 782px ) {
+	.nanobar-preview-container {
+		min-height: 290px;
+	}
+}

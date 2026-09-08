@@ -1,0 +1,5 @@
+// Entry point for the compiled assets/css/frontend.css, loaded on every
+// frontend request where the panel is shown. See assets/js/frontend.js for
+// the paired open/close and submenu behavior.
+
+@use "components/panel";

@@ -1,0 +1,129 @@
+// Block: .nanobar-notices-container — restyled dismissible settings notices.
+
+@use "variables" as v;
+
+.nanobar-notices-container {
+	margin-top: 24px;
+	padding: 0 2px;
+}
+
+.nanobar-settings-wrap .notice {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin: 0 0 12px;
+	padding: 14px 16px;
+	border-left: 4px solid;
+	border-radius: 6px;
+	background: #fff;
+	animation: nanobar-notice-slide-in .3s ease-out;
+
+	&.is-dismissing {
+		animation: nanobar-notice-fade-out .4s ease-out forwards;
+	}
+
+	p {
+		margin: 0;
+		flex: 1 1 auto;
+		font-size: 14px;
+	}
+
+	.notice-icon::before {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		flex: 0 0 20px;
+		font-size: 18px;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	.notice-dismiss {
+		flex: 0 0 auto;
+		position: relative;
+		padding: 0;
+		min-width: 24px;
+		height: 24px;
+		line-height: 24px;
+		color: #9ca0a5;
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 16px;
+		opacity: .6;
+		transition: opacity .15s ease;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	&.notice-success {
+		border-left-color: v.$nanobar-admin-success;
+		background: #f0f6f0;
+
+		.notice-icon::before {
+			content: "\2713";
+			color: v.$nanobar-admin-success;
+		}
+	}
+
+	&.notice-error {
+		border-left-color: v.$nanobar-admin-error;
+		background: #f8f0f1;
+
+		.notice-icon::before {
+			content: "!";
+			color: v.$nanobar-admin-error;
+		}
+	}
+
+	&.notice-warning {
+		border-left-color: v.$nanobar-admin-warning;
+		background: #fefaf0;
+
+		.notice-icon::before {
+			content: "\26a0";
+			color: v.$nanobar-admin-warning;
+		}
+	}
+}
+
+@keyframes nanobar-notice-slide-in {
+	from {
+		opacity: 0;
+		transform: translateY( -8px );
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY( 0 );
+	}
+}
+
+@keyframes nanobar-notice-fade-out {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@media ( max-width: 600px ) {
+	.nanobar-notices-container {
+		margin-top: 20px;
+		padding: 0;
+	}
+
+	.nanobar-settings-wrap .notice {
+		padding: 12px;
+		gap: 10px;
+
+		p {
+			font-size: 13px;
+		}
+	}
+}

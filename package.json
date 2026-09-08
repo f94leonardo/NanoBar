@@ -1,0 +1,15 @@
+{
+    "name": "nanobar",
+    "version": "1.0.0",
+    "private": true,
+    "description": "SCSS build for the NanoBar WordPress plugin.",
+    "scripts": {
+        "build": "npm run build:frontend && npm run build:admin",
+        "build:frontend": "sass --style=compressed --no-source-map assets/scss/frontend.scss assets/css/frontend.css",
+        "build:admin": "sass --style=compressed --no-source-map assets/scss/admin.scss assets/css/admin.css",
+        "watch": "sass --watch assets/scss/frontend.scss:assets/css/frontend.css assets/scss/admin.scss:assets/css/admin.css"
+    },
+    "devDependencies": {
+        "sass": "^1.83.0"
+    }
+}

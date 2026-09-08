@@ -1,0 +1,609 @@
+// Block: .nanobar — the floating toggle button and its quick-access menu.
+//
+// Colors for the toggle button itself come from CSS custom properties set
+// inline per request (--nanobar-toggle-size/-bg/-fg), computed from the
+// user's saved settings — see Frontend\Renderer::render_panel(). Everything
+// else here is static.
+
+.nanobar {
+	--nanobar-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	position: fixed;
+	z-index: 999999;
+	font-family: var( --nanobar-font );
+	font-size: 16px;
+
+	[hidden] {
+		display: none !important;
+	}
+
+	// Modifiers: horizontal/vertical position.
+	&--left {
+		left: max( 16px, env( safe-area-inset-left ) );
+	}
+
+	&--center {
+		left: 50%;
+		transform: translateX( -50% );
+	}
+
+	&--right {
+		right: max( 16px, env( safe-area-inset-right ) );
+	}
+
+	&--bottom {
+		bottom: max( 16px, env( safe-area-inset-bottom ) );
+	}
+
+	&--top {
+		top: max( 16px, env( safe-area-inset-top ) );
+	}
+
+	// Element: the round toggle button.
+	&__toggle {
+		width: var( --nanobar-toggle-size, 44px );
+		height: var( --nanobar-toggle-size, 44px );
+		border-radius: 50%;
+		border: none;
+		background: var( --nanobar-toggle-bg, #1d2327 );
+		color: var( --nanobar-toggle-fg, #fff );
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform .15s ease, box-shadow .15s ease;
+
+		&:hover,
+		&:focus-visible {
+			transform: scale( 1.06 );
+		}
+	}
+
+	&__toggle-icon {
+		font-size: calc( var( --nanobar-toggle-size, 44px ) * .5 );
+		width: calc( var( --nanobar-toggle-size, 44px ) * .5 );
+		height: calc( var( --nanobar-toggle-size, 44px ) * .5 );
+		line-height: 1;
+	}
+
+	&__toggle:focus-visible,
+	&__item:focus-visible,
+	&__submenu-toggle:focus-visible,
+	&__submenu a:focus-visible {
+		outline: 2px solid #72aee6;
+		outline-offset: 2px;
+	}
+
+	// Element: the dropdown menu itself.
+	&__menu {
+		position: absolute;
+		background: #1d2327;
+		border-radius: 9px;
+		padding: 6px;
+		min-width: 210px;
+		max-width: min( calc( 100vw - 32px ), 360px );
+		box-shadow: 0 8px 24px rgba( 0, 0, 0, .28 );
+		display: none;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	&.is-open &__menu {
+		display: flex;
+	}
+
+	&--bottom &__menu {
+		bottom: calc( var( --nanobar-toggle-size, 44px ) + 8px );
+		top: auto;
+	}
+
+	&--top &__menu {
+		top: calc( var( --nanobar-toggle-size, 44px ) + 8px );
+		bottom: auto;
+	}
+
+	&--left &__menu {
+		left: 0;
+		right: auto;
+	}
+
+	&--center &__menu {
+		left: 50%;
+		right: auto;
+		transform: translateX( -50% );
+	}
+
+	&--right &__menu {
+		right: 0;
+		left: auto;
+	}
+
+	// Element: a single menu entry (link or button).
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		box-sizing: border-box;
+		color: #f0f0f1 !important;
+		text-decoration: none !important;
+		font-family: var( --nanobar-font ) !important;
+		padding: 9px 10px;
+		min-height: 40px;
+		border-radius: 5px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		font-size: 15px;
+		text-align: left;
+		width: 100%;
+
+		&:hover,
+		&:focus-visible {
+			background: rgba( 255, 255, 255, .09 );
+			color: #f0f0f1 !important;
+			text-decoration: none !important;
+		}
+
+		&--split {
+			width: auto;
+		}
+
+		&--submenu-trigger {
+			justify-content: flex-start;
+		}
+
+		// Modifier: the logout entry, visually separated at the bottom.
+		&--logout {
+			position: relative;
+			margin-top: 7px;
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: -4px;
+				left: 4px;
+				right: 4px;
+				height: 1px;
+				background: rgba( 255, 255, 255, .14 );
+			}
+
+			&:hover,
+			&:focus-visible {
+				background: rgba( 224, 67, 67, .22 );
+			}
+		}
+	}
+
+	.dashicons.nanobar__icon {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		line-height: 1;
+		flex: 0 0 auto;
+	}
+
+	// Element: a "split button" pairing (main action + submenu disclosure).
+	&__item-group {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax( 0, 1fr ) 30px;
+		gap: 2px;
+	}
+
+	&__submenu-toggle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 30px;
+		min-height: 40px;
+		padding: 0;
+		border: 0;
+		border-radius: 5px;
+		background: transparent;
+		color: #f0f0f1;
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			background: rgba( 255, 255, 255, .09 );
+			color: #f0f0f1 !important;
+			text-decoration: none !important;
+		}
+
+		.dashicons {
+			font-size: 15px;
+			width: 15px;
+			height: 15px;
+			transition: transform .15s ease;
+		}
+	}
+
+	&__item-group.is-open > &__submenu-toggle .dashicons {
+		transform: rotate( 90deg );
+	}
+
+	&__item-group.is-open > &__submenu {
+		display: flex;
+	}
+
+	// Element: the flyout submenu (Dashboard, New).
+	&__submenu {
+		display: none;
+		flex-direction: column;
+		position: absolute;
+		top: 0;
+		z-index: 2;
+		background: #2c3338;
+		border-radius: 6px;
+		padding: 4px;
+		min-width: 170px;
+		box-shadow: 0 6px 18px rgba( 0, 0, 0, .3 );
+
+		a {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: #f0f0f1 !important;
+			text-decoration: none !important;
+			font-family: var( --nanobar-font ) !important;
+			padding: 8px 10px;
+			min-height: 34px;
+			border-radius: 4px;
+			font-size: 14px;
+
+			&:hover,
+			&:focus-visible {
+				background: rgba( 255, 255, 255, .09 );
+				color: #f0f0f1 !important;
+			}
+		}
+
+		.dashicons {
+			flex: 0 0 auto;
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	&--left &__submenu {
+		left: calc( 100% + 4px );
+		right: auto;
+	}
+
+	&--center &__submenu {
+		left: 100%;
+		right: auto;
+	}
+
+	&--right &__submenu {
+		right: calc( 100% + 4px );
+		left: auto;
+	}
+
+	&--bottom &__submenu {
+		top: auto;
+		bottom: 0;
+	}
+
+	&--top &__submenu {
+		top: 0;
+		bottom: auto;
+	}
+
+	&--icons-only &__menu {
+		min-width: 73px;
+	}
+
+	// Modifier: icons-only mode (manual setting only — phones get the
+	// tab-bar mode below instead of this).
+	&--icons-only {
+		.nanobar__item-label {
+			position: absolute !important;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect( 0, 0, 0, 0 );
+			white-space: nowrap;
+			border: 0;
+		}
+
+		.nanobar__item {
+			justify-content: center;
+			gap: 0;
+			padding: 6px;
+		}
+
+		.nanobar__item-group {
+			grid-template-columns: minmax( 0, 1fr ) 24px;
+
+			> .nanobar__item--split {
+				min-width: 40px;
+			}
+		}
+
+		.nanobar__submenu-toggle {
+			width: 24px;
+			min-height: 38px;
+		}
+
+		.nanobar__icon {
+			font-size: 24px !important;
+			width: 24px !important;
+			height: 24px !important;
+		}
+
+		.nanobar__submenu {
+			min-width: 0;
+
+			a {
+				min-width: 48px;
+				justify-content: center;
+				padding: 6px;
+			}
+		}
+
+		.nanobar__submenu-label {
+			position: absolute !important;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect( 0, 0, 0, 0 );
+			white-space: nowrap;
+			border: 0;
+		}
+	}
+
+	&--icons-only .nanobar__item {
+		justify-content: left !important;
+	}
+
+	// Modifier: tab-bar mode (automatic on phones, ≤600px viewport width) —
+	// replaces the floating toggle + dropdown with an always-visible
+	// horizontal dock pinned to the bottom edge (the admin's chosen corner
+	// position is ignored here on purpose, same as a native app tab bar).
+	// Icon-on-top/label-below stays legible instead of the illegible,
+	// oversized icon-only rows the toggle menu produced at this width.
+	&--tabbar-auto {
+		left: 0 !important;
+		right: 0 !important;
+		bottom: 0 !important;
+		top: auto !important;
+		transform: none !important;
+		max-width: none;
+		width: 100%;
+
+		.nanobar__toggle {
+			display: none;
+		}
+
+		.nanobar__menu {
+			display: flex !important;
+			position: static;
+			flex-direction: row;
+			align-items: stretch;
+			justify-content: space-around;
+			gap: 0;
+			width: 100%;
+			max-width: none;
+			min-width: 0;
+			border-radius: 0;
+			padding: 4px max( 4px, env( safe-area-inset-right ) ) calc( 4px + env( safe-area-inset-bottom ) ) max( 4px, env( safe-area-inset-left ) );
+			box-shadow: 0 -4px 16px rgba( 0, 0, 0, .28 );
+		}
+
+		// Every top-level tile — a split item-group or a plain link/button —
+		// must share the row equally. Both need an explicit flex-basis: the
+		// base `.nanobar__item` rule sets `width: 100%`, which browsers use
+		// as the flex-basis when nothing overrides it, so a lone `.nanobar__item`
+		// would otherwise claim the *entire* row's width and squeeze the
+		// other tiles down to nothing.
+		.nanobar__item-group,
+		.nanobar__menu > .nanobar__item {
+			flex: 1 1 0;
+			min-width: 0;
+		}
+
+		.nanobar__item-group {
+			display: block;
+		}
+
+		.nanobar__item {
+			flex-direction: column;
+			justify-content: center;
+			gap: 3px;
+			width: 100%;
+			height: 100%;
+			padding: 6px 2px;
+			min-height: 48px;
+			border-radius: 8px;
+
+			&--split {
+				width: 100%;
+			}
+		}
+
+		.nanobar__item-label {
+			font-size: 11px;
+			line-height: 1.1;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 100%;
+		}
+
+		.nanobar__icon {
+			font-size: 20px !important;
+			width: 20px !important;
+			height: 20px !important;
+		}
+
+		// The submenu-disclosure chevron becomes a small corner badge instead
+		// of its own grid column — there's no room for a second tap target
+		// this narrow, so it overlaps the tile rather than sitting beside it.
+		.nanobar__submenu-toggle {
+			position: absolute;
+			top: 2px;
+			right: 2px;
+			width: 18px;
+			height: 18px;
+			min-height: 18px;
+			background: rgba( 0, 0, 0, .35 );
+			border-radius: 50%;
+
+			.dashicons {
+				font-size: 11px;
+				width: 11px;
+				height: 11px;
+			}
+		}
+
+		.nanobar__item-group.is-open > .nanobar__submenu-toggle .dashicons {
+			transform: rotate( -90deg );
+		}
+
+		// Submenus pop upward, centered above the tapped tile, instead of
+		// flying out sideways — there's no room to the side in a full-width
+		// bar. The outer tiles anchor to the screen edge instead of centering
+		// so the popup can't run off-screen. Background/shadow are repeated
+		// here because the ≤600px media query below (written for the old
+		// inline flyout) sets a near-transparent background and no shadow,
+		// which would otherwise leak into this floating popup.
+		.nanobar__submenu {
+			position: absolute;
+			top: auto;
+			bottom: 100%;
+			left: 50%;
+			right: auto;
+			transform: translateX( -50% );
+			margin-bottom: 8px;
+			min-width: 180px;
+			background: #2c3338;
+			box-shadow: 0 6px 18px rgba( 0, 0, 0, .3 );
+		}
+
+		.nanobar__item-group:first-child .nanobar__submenu {
+			left: 0;
+			transform: none;
+		}
+
+		.nanobar__item-group:last-child .nanobar__submenu {
+			left: auto;
+			right: 0;
+			transform: none;
+		}
+
+		.nanobar__item--logout {
+			margin-top: 0;
+
+			&::before {
+				content: none;
+			}
+		}
+	}
+
+	// Modifier: compact tab-bar (automatic below 480px, layered on top of
+	// --tabbar-auto above). Drops the text labels entirely — icons only —
+	// and, for tiles with a submenu (Bacheca, Nuovo), moves the disclosure
+	// chevron from a corner badge to a small arrow stacked directly above
+	// the main icon, so there's still room for both without shrinking the
+	// tap targets further.
+	&--tabbar-compact {
+		.nanobar__item-label {
+			position: absolute !important;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect( 0, 0, 0, 0 );
+			white-space: nowrap;
+			border: 0;
+		}
+
+		// Left as `display: block` (inherited from --tabbar-auto above): the
+		// chevron stays absolutely positioned (like its corner-badge form),
+		// so it never adds real height to the group's box. If it took part
+		// in normal flow here, a grouped tile's icon would sit at a
+		// different vertical center than a plain icon-only tile's — exactly
+		// the misalignment this replaced.
+		.nanobar__submenu-toggle {
+			position: absolute;
+			top: 1px;
+			left: 50%;
+			right: auto;
+			transform: translateX( -50% );
+			width: 16px;
+			height: 16px;
+			min-height: 16px;
+			background: none;
+			border-radius: 0;
+
+			.dashicons {
+				font-size: 12px;
+				width: 12px;
+				height: 12px;
+				transform: rotate( -90deg );
+			}
+		}
+
+		.nanobar__item-group.is-open > .nanobar__submenu-toggle .dashicons {
+			transform: rotate( 90deg );
+		}
+	}
+}
+
+@media ( max-width: 600px ) {
+	.nanobar {
+		max-width: calc( 100vw - 16px );
+
+		&--left {
+			left: max( 8px, env( safe-area-inset-left ) );
+		}
+
+		&--right {
+			right: max( 8px, env( safe-area-inset-right ) );
+		}
+
+		&--bottom {
+			bottom: max( 8px, env( safe-area-inset-bottom ) );
+		}
+
+		&--top {
+			top: max( 8px, env( safe-area-inset-top ) );
+		}
+
+		&__menu {
+			min-width: min( 230px, calc( 100vw - 16px ) );
+			max-width: calc( 100vw - 16px );
+		}
+
+		&--center &__menu {
+			width: min( 230px, calc( 100vw - 16px ) );
+		}
+
+		&__submenu {
+			position: static;
+			grid-column: 1 / -1;
+			min-width: 0;
+			width: auto !important;
+			margin: 0 0 2px;
+			box-shadow: none;
+			background: rgba( 0, 0, 0, .12 );
+		}
+
+		&__item-group.is-open {
+			background: rgba( 255, 255, 255, .04 );
+			border-radius: 5px;
+		}
+	}
+}
+
+@media print {
+	.nanobar {
+		display: none !important;
+	}
+}

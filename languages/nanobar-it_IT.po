@@ -1,0 +1,259 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NanoBar 1.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/f94leonardo/NanoBar/issues\n"
+"POT-Creation-Date: 2026-09-08T07:27:13.398Z\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: nanobar\n"
+"Language: it_IT\n"
+"PO-Revision-Date: 2026-09-08T07:27:13.399Z\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: f94leonardo\n"
+"Language-Team: Italian\n"
+
+#: src/Settings/Page.php:40
+#: src/Settings/Page.php:41
+#: src/Settings/Page.php:121
+msgid "NanoBar"
+msgstr "NanoBar"
+
+#: src/Settings/Page.php:89
+#: src/Settings/Page.php:189
+msgid "Top"
+msgstr "Alto"
+
+#: src/Settings/Page.php:90
+#: src/Settings/Page.php:188
+msgid "Bottom"
+msgstr "Basso"
+
+#: src/Settings/Page.php:91
+#: src/Settings/Page.php:179
+msgid "Left"
+msgstr "Sinistra"
+
+#: src/Settings/Page.php:92
+#: src/Settings/Page.php:181
+msgid "Right"
+msgstr "Destra"
+
+#: src/Settings/Page.php:93
+#: src/Settings/Page.php:180
+msgid "Center"
+msgstr "Centro"
+
+#: nanobar.php:34
+msgid ""
+"NanoBar is missing its Composer autoloader. Run \"composer install\" in the "
+"plugin directory."
+msgstr ""
+"Ad NanoBar manca l’autoloader di Composer. Esegui \"composer install\" "
+"nella cartella del plugin."
+
+#: src/Settings/Page.php:122
+msgid ""
+"Configure the floating panel that replaces the classic admin bar on the "
+"frontend."
+msgstr ""
+"Configura il pannello flottante che sostituisce la barra di amministrazione "
+"classica nel frontend."
+
+#: src/Settings/Page.php:126
+#: src/Settings/Page.php:253
+msgid "Save changes"
+msgstr "Salva modifiche"
+
+#: src/Settings/Page.php:136
+msgid "General"
+msgstr "Generale"
+
+#: src/Settings/Page.php:143
+msgid "Enable NanoBar"
+msgstr "Attiva NanoBar"
+
+#: src/Settings/Page.php:143
+msgid "Replaces the classic admin bar on the frontend."
+msgstr "Sostituisce la barra di amministrazione classica nel frontend."
+
+#: src/Settings/Page.php:148
+msgid "Enabled roles"
+msgstr "Ruoli abilitati"
+
+#: src/Settings/Page.php:149
+msgid "Choose which roles can see NanoBar. The Subscriber role is not available."
+msgstr ""
+"Scegli quali ruoli possono vedere NanoBar. Il ruolo Abbonato non è "
+"disponibile."
+
+#: src/Settings/Page.php:164
+msgid "Force admin bar for Query Monitor"
+msgstr "Forza la barra di amministrazione per Query Monitor"
+
+#: src/Settings/Page.php:164
+msgid "Keeps the native bar available, which Query Monitor needs in order to work."
+msgstr ""
+"Mantiene disponibile la barra nativa, necessaria al funzionamento di Query "
+"Monitor."
+
+#: src/Settings/Page.php:173
+msgid "Position"
+msgstr "Posizione"
+
+#: src/Settings/Page.php:177
+msgid "Horizontal"
+msgstr "Orizzontale"
+
+#: src/Settings/Page.php:186
+msgid "Vertical"
+msgstr "Verticale"
+
+#: src/Settings/Page.php:198
+msgid "Appearance"
+msgstr "Aspetto"
+
+#: src/Settings/Page.php:202
+msgid "Size"
+msgstr "Dimensione"
+
+#: src/Settings/Page.php:211
+#. translators: 1: minimum size in pixels, 2: maximum size in pixels.
+msgid "From %1$dpx to %2$dpx."
+msgstr "Da %1$dpx a %2$dpx."
+
+#: src/Settings/Page.php:220
+msgid "Background color"
+msgstr "Colore di sfondo"
+
+#: src/Settings/Page.php:222
+msgid "The icon color is automatically adjusted to keep sufficient contrast."
+msgstr ""
+"Il colore dell’icona viene regolato automaticamente per mantenere un "
+"contrasto sufficiente."
+
+#: src/Settings/Page.php:229
+msgid "Icons only"
+msgstr "Solo icone"
+
+#: src/Settings/Page.php:229
+msgid "Hides labels and automatically keeps a compact mode on narrow screens."
+msgstr ""
+"Nasconde le etichette e mantiene automaticamente una modalità compatta "
+"sugli schermi stretti."
+
+#: src/Settings/Page.php:238
+msgid "Preview"
+msgstr "Anteprima"
+
+#: src/Settings/Page.php:241
+msgid "Preview of the NanoBar position"
+msgstr "Anteprima della posizione di NanoBar"
+
+#: src/Settings/Page.php:254
+msgid "Restore defaults"
+msgstr "Ripristina i valori predefiniti"
+
+#: src/Settings/Page.php:256
+msgid "Changes are applied on save."
+msgstr "Le modifiche vengono applicate al salvataggio."
+
+#: src/Frontend/Menus.php:31
+#: src/Frontend/Menus.php:104
+msgid "Media"
+msgstr "Media"
+
+#: src/Frontend/Menus.php:39
+msgid "Posts"
+msgstr "Articoli"
+
+#: src/Frontend/Menus.php:47
+msgid "Pages"
+msgstr "Pagine"
+
+#: src/Frontend/Menus.php:54
+msgid "Plugins"
+msgstr "Plugin"
+
+#: src/Frontend/Menus.php:59
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: src/Frontend/Menus.php:66
+msgid "Contact"
+msgstr "Contatti"
+
+#: src/Frontend/Menus.php:167
+msgid "Log out"
+msgstr "Esci"
+
+#: src/Frontend/ContextLinks.php:44
+msgid "Edit content"
+msgstr "Modifica contenuto"
+
+#: src/Frontend/ContextLinks.php:47
+#: src/Frontend/ContextLinks.php:70
+#. translators: %s: content type or taxonomy name (e.g. Page, Post, Category, Tag).
+msgid "Edit %s"
+msgstr "Modifica %s"
+
+#: src/Frontend/ContextLinks.php:67
+msgid "Edit term"
+msgstr "Modifica termine"
+
+#: src/Frontend/ContextLinks.php:91
+msgid "Edit user"
+msgstr "Modifica utente"
+
+#: src/Frontend/ContextLinks.php:112
+msgid "Manage posts from this period"
+msgstr "Gestisci gli articoli di questo periodo"
+
+#: src/Frontend/ContextLinks.php:127
+#. translators: %s: plural content type name.
+msgid "Manage %s"
+msgstr "Gestisci %s"
+
+#: src/Frontend/ContextLinks.php:333
+#: src/Frontend/ContextLinks.php:334
+msgid "Appearance: Themes"
+msgstr "Aspetto: Temi"
+
+#: src/Frontend/ContextLinks.php:343
+#: src/Frontend/ContextLinks.php:344
+#: src/Frontend/ContextLinks.php:361
+msgid "Edit site"
+msgstr "Modifica sito"
+
+#: src/Frontend/ContextLinks.php:357
+msgid "Current template"
+msgstr "Template corrente"
+
+#: src/Frontend/ContextLinks.php:363
+#. translators: %s: block template name.
+msgid "Template: %s"
+msgstr "Template: %s"
+
+#: src/Frontend/Renderer.php:146
+msgid "Open/close quick admin menu"
+msgstr "Apri/chiudi il menu rapido di amministrazione"
+
+#: src/Frontend/Renderer.php:153
+#: src/Frontend/Renderer.php:155
+#: src/Frontend/Renderer.php:170
+#: src/Frontend/Renderer.php:172
+msgid "Dashboard"
+msgstr "Bacheca"
+
+#: src/Frontend/Renderer.php:157
+msgid "Open Dashboard submenu"
+msgstr "Apri il sottomenu Bacheca"
+
+#: src/Frontend/Renderer.php:192
+#: src/Frontend/Renderer.php:194
+msgid "New"
+msgstr "Nuovo"
+
+#: src/Frontend/Renderer.php:196
+msgid "Open New submenu"
+msgstr "Apri il sottomenu Nuovo"

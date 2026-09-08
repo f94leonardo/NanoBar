@@ -1,0 +1,9 @@
+// Entry point for the compiled assets/css/admin.css, loaded only on the
+// Settings → NanoBar screen. See assets/js/admin-settings.js for the paired
+// live-preview and color picker behavior.
+
+@use "admin/header";
+@use "admin/notices";
+@use "admin/bento";
+@use "admin/preview";
+@use "admin/actions";

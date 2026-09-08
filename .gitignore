@@ -1,0 +1,25 @@
+# Claude Code
+CLAUDE.md
+.claude
+.agents
+skills-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors/IDEs
+.vscode/
+.idea/
+*.swp
+
+# Dependencies
+/node_modules/
+/vendor/
+
+# Tooling caches
+/.phpcs-cache
+/.phpstan-cache
+
+# Build output
+/*.zip

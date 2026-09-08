@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset name="NanoBar">
+	<description>WordPress Coding Standards ruleset for NanoBar.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/assets/css/*</exclude-pattern>
+	<exclude-pattern>/languages/*</exclude-pattern>
+	<exclude-pattern>/.phpcs-cache/*</exclude-pattern>
+	<exclude-pattern>/.phpstan-cache/*</exclude-pattern>
+
+	<arg value="sp"/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="8"/>
+
+	<!-- See the "Requires at least" plugin header. -->
+	<config name="minimum_supported_wp_version" value="6.8"/>
+
+	<rule ref="WordPress-Extra">
+		<!-- The project intentionally uses PSR-4 class-per-file autoloading. -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+	</rule>
+	<rule ref="WordPress-Docs"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="nanobar"/>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array" value="nanobar,NanoBar,NANOBAR"/>
+		</properties>
+	</rule>
+</ruleset>
