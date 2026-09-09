@@ -32,7 +32,8 @@ if [[ -z "$VERSION" ]]; then
 fi
 
 ZIP_NAME="${PLUGIN_SLUG}-${VERSION}.zip"
-ZIP_PATH="${PLUGIN_DIR}/${ZIP_NAME}"
+DIST_DIR="${PLUGIN_DIR}/dist"
+ZIP_PATH="${DIST_DIR}/${ZIP_NAME}"
 BUILD_DIR=$(mktemp -d)
 DEST="${BUILD_DIR}/${PLUGIN_SLUG}"
 
@@ -96,13 +97,15 @@ rsync -a \
     --exclude='.github/' \
     --exclude='.claude/' \
     --exclude='.agents/' \
+    --exclude='.wordpress-org/' \
     --exclude='node_modules/' \
     --exclude='assets/scss/' \
     --exclude='vendor/' \
+    --exclude='composer.json' \
     --exclude='composer.lock' \
     --exclude='package.json' \
     --exclude='package-lock.json' \
-    --exclude='*.zip' \
+    --exclude='dist/' \
     --exclude='.editorconfig' \
     --exclude='.gitignore' \
     --exclude='.phpcs-cache' \
@@ -112,24 +115,17 @@ rsync -a \
     --exclude='CLAUDE.md' \
     --exclude='skills-lock.json' \
     --exclude='bin/' \
+    --exclude='README.md' \
     "$PLUGIN_DIR/" "$DEST/"
 
-# Installa l'autoloader Composer (nessuna dipendenza runtime: solo l'autoload
-# PSR-4 generato per NanoBar\ → src/, richiesto da nanobar.php).
-echo "   composer install --no-dev..."
-composer install \
-    --working-dir="$DEST" \
-    --no-dev \
-    --optimize-autoloader \
-    --no-interaction \
-    --quiet
-
-# Rimuovi composer.json/lock dal pacchetto (non servono in produzione)
-rm -f "$DEST/composer.json" "$DEST/composer.lock"
+# Nessuno step di build lato Composer: il plugin usa un autoloader proprio
+# (nanobar.php), senza dipendenze runtime — il pacchetto è già pronto così
+# com'è, esattamente come verrà eseguito da chi lo installa da WordPress.org.
 
 # ── 4. ZIP ────────────────────────────────────────────────────────────────────
 echo ""
 echo "→ [4/4] Creazione ZIP..."
+mkdir -p "$DIST_DIR"
 rm -f "$ZIP_PATH"
 cd "$BUILD_DIR"
 zip -r "$ZIP_PATH" "${PLUGIN_SLUG}/" --quiet

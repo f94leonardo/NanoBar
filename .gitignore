@@ -22,4 +22,4 @@ Thumbs.db
 /.phpstan-cache
 
 # Build output
-/*.zip
+/dist/

@@ -5,9 +5,9 @@
  * Description: Replaces WordPress's classic admin bar, on the frontend, with a
  *              compact, role-aware floating panel, configurable from a single
  *              global settings page (Settings → NanoBar).
- * Version:     1.0.0
+ * Version:     1.0.1
  * Requires at least: 6.8
- * Requires PHP: 8.4
+ * Requires PHP: 8.0
  * Author:      f94leonardo
  * Author URI:  https://github.com/f94leonardo
  * Text Domain: nanobar
@@ -23,21 +23,28 @@ declare( strict_types=1 );
 defined( 'ABSPATH' ) || exit;
 
 define( 'NANOBAR_FILE', __FILE__ );
-define( 'NANOBAR_VERSION', '1.0.0' );
+define( 'NANOBAR_VERSION', '1.0.1' );
 
-if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	add_action(
-		'admin_notices',
-		static function (): void {
-			printf(
-				'<div class="notice notice-error"><p>%s</p></div>',
-				esc_html__( 'NanoBar is missing its Composer autoloader. Run "composer install" in the plugin directory.', 'nanobar' )
-			);
+/**
+ * Lightweight PSR-4 autoloader for the `NanoBar\` namespace, mapped to /src.
+ * The plugin has no runtime dependencies (Composer is only used in
+ * development, for coding-standards and static-analysis tooling), so it
+ * needs no vendor/autoload.php and works as soon as it's activated.
+ */
+spl_autoload_register(
+	static function ( string $class ): void {
+		$prefix = 'NanoBar\\';
+		if ( ! str_starts_with( $class, $prefix ) ) {
+			return;
 		}
-	);
-	return;
-}
 
-require_once __DIR__ . '/vendor/autoload.php';
+		$relative_path = str_replace( '\\', '/', substr( $class, strlen( $prefix ) ) );
+		$file          = __DIR__ . '/src/' . $relative_path . '.php';
+
+		if ( is_file( $file ) ) {
+			require $file;
+		}
+	}
+);
 
 NanoBar\Plugin::instance()->boot();

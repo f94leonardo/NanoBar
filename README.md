@@ -20,21 +20,14 @@
 
 ## Requirements
 
-- WordPress 6.8, tested up to 7.0+
-- PHP 8.4+
-- [Composer](https://getcomposer.org/) (to generate the autoloader; only needed once, at install time)
+- WordPress 6.8, tested up to 7.1
+- PHP 8.0+
 
 ## Installation
 
-1. Copy (or clone) the plugin into `wp-content/plugins/nanobar/`.
-2. From that directory, run:
-
-   ```bash
-   composer install --no-dev
-   ```
-
-3. Activate **NanoBar Compact Admin Toolbar** from the Plugins screen.
-4. Go to **Settings → NanoBar** to configure it.
+1. Install it from the WordPress admin (**Plugins → Add New**, search "NanoBar"), or copy (or clone) this repository into `wp-content/plugins/nanobar/`. No build step is required: the plugin has no runtime dependencies and ships its own lightweight autoloader.
+2. Activate **NanoBar Compact Admin Toolbar** from the Plugins screen.
+3. Go to **Settings → NanoBar** to configure it.
 
 ## Configuration
 
@@ -53,7 +46,7 @@ Go to **Settings → NanoBar** to configure:
 
 ## Development
 
-Install the full toolchain (PHP and Node dependencies):
+Install the dev toolchain (coding standards, static analysis, Node dependencies — the plugin itself has no runtime dependencies):
 
 ```bash
 composer install
@@ -62,8 +55,8 @@ npm install
 
 ### Architecture
 
-- `nanobar.php` — plugin header and bootstrap only; wires the Composer autoloader and boots `NanoBar\Plugin`.
-- `src/` — PSR-4 autoloaded classes under the `NanoBar\` namespace (`NanoBar\Settings\*`, `NanoBar\Frontend\*`, `NanoBar\Support\*`).
+- `nanobar.php` — plugin header and bootstrap only; registers a small PSR-4-style autoloader for the `NanoBar\` namespace (no Composer/vendor dependency at runtime) and boots `NanoBar\Plugin`.
+- `src/` — autoloaded classes under the `NanoBar\` namespace (`NanoBar\Settings\*`, `NanoBar\Frontend\*`, `NanoBar\Support\*`).
 - `assets/scss/` — source stylesheets, organized by BEM block, compiled to `assets/css/`.
 - `assets/js/` — frontend and admin-settings scripts.
 - `languages/` — the `nanobar.pot` source catalog and per-locale `.po`/`.mo` translations.
@@ -102,3 +95,16 @@ String extraction and translation files live in `languages/`:
 - `nanobar-it_IT.po` / `nanobar-it_IT.mo` — the Italian translation (compiled `.mo` is what WordPress actually loads at runtime).
 
 To add another locale, copy `nanobar.pot` to `languages/nanobar-{locale}.po`, translate it (e.g. with [Poedit](https://poedit.net/)), and save — Poedit compiles the matching `.mo` automatically.
+
+### Building a release
+
+`bin/build-zip.sh` packages a production-ready plugin ZIP: it lints with PHPCS, compiles the SCSS assets, then copies only the files WordPress actually needs (no `vendor/`, `node_modules/`, `composer.json`/`.lock`, dev configs, or this `README.md` — WordPress.org's own `readme.txt` is what ships instead) into a clean `nanobar/` folder and zips it.
+
+```bash
+bash bin/build-zip.sh                          # lint + build assets + package
+bash bin/build-zip.sh --skip-npm                # reuse the already-compiled assets/css/*.css, skip `npm run build`
+bash bin/build-zip.sh --skip-lint                # skip the PHPCS check
+bash bin/build-zip.sh --skip-npm --skip-lint     # just re-package, skip both
+```
+
+The version number is read straight from the `Version:` header in `nanobar.php`. The resulting archive is written to `dist/nanobar-{version}.zip` (gitignored) — that's the ZIP to upload for a WordPress.org review, or to unpack into the SVN `trunk/` for a release.

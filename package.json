@@ -1,6 +1,6 @@
 {
     "name": "nanobar",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "description": "SCSS build for the NanoBar WordPress plugin.",
     "scripts": {
