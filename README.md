@@ -2,6 +2,8 @@
 
 **NanoBar** is a WordPress plugin that replaces the classic admin bar on the frontend with a compact, role-aware floating panel. Configuration lives in a single global settings page: **Settings → NanoBar**.
 
+![The NanoBar floating toggle button on the frontend, with the quick-access menu open](.wordpress-org/screenshot-1.png)
+
 ## Features
 
 - **Floating toggle button** — a small circular button, positioned in a corner of the viewport, that opens a compact quick-access menu.
@@ -38,6 +40,8 @@ Go to **Settings → NanoBar** to configure:
 - Horizontal/vertical position, with a live preview.
 - Toggle size and background color.
 - Icons-only mode.
+
+![The Settings → NanoBar page, with the live position/size/color preview](.wordpress-org/screenshot-2.png)
 
 ## Filters
 
