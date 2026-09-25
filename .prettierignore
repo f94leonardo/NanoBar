@@ -1,0 +1,16 @@
+assets/css/
+vendor/
+node_modules/
+languages/
+dist/
+*.min.*
+.claude/
+.wordpress-org/
+# Header/readme WordPress.org e changelog: formato gestito a mano
+readme.txt
+CHANGELOG.md
+package.json
+package-lock.json
+composer.json
+composer.lock
+README.md

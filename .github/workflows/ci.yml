@@ -1,0 +1,39 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+jobs:
+    php:
+        name: PHP (phpcs + phpstan)
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+                  tools: composer
+            - run: composer install --no-interaction --prefer-dist
+            - run: composer run phpcs
+            - run: composer run phpstan
+
+    assets:
+        name: Assets (stylelint + eslint + prettier + build)
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+            - run: npm ci
+            - run: npm run lint:css
+            - run: npm run lint:js
+            - run: npm run format:check
+            - run: npm run test:js
+            - name: Compiled CSS must be committed
+              run: |
+                  npm run build
+                  git diff --exit-code -- assets/css

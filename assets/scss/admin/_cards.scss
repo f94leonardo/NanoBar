@@ -1,0 +1,144 @@
+// Blocks: .nanobar-bento-grid / .nanobar-bento-card — the page layout.
+//
+// Desktop layout (12 columns):
+//   row 1: General | Enabled roles     (6 + 6)
+//   row 2: Appearance | Preview        (6 + 6, same height)
+//   then Menu items and Quick links at full width.
+// Cards in a row stretch to the same height; a card's body grows to fill it.
+
+@use "variables" as v;
+
+.nanobar-bento-grid {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: v.$space-xl;
+}
+
+// Appearance | Preview: their own two-column row: both cards stretch to the same height.
+.nanobar-bento-pair {
+	display: grid;
+	grid-column: 1 / -1;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: v.$space-xl;
+}
+
+.nanobar-bento-card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	background: #fff;
+	border: 1px solid v.$nanobar-admin-border;
+	border-radius: v.$radius-card;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+	transition:
+		box-shadow 0.2s ease,
+		border-color 0.2s ease;
+
+	// Anchor targets of the header's section nav: land below the sticky
+	// header instead of under it.
+	scroll-margin-top: var(--nanobar-sticky-top, 152px);
+
+	&:hover {
+		border-color: v.$nanobar-admin-border-hover;
+		box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+	}
+
+	&--general,
+	&--roles {
+		grid-column: span 6;
+	}
+
+	&--menu-items,
+	&--quick-links {
+		grid-column: 1 / -1;
+	}
+
+	// No `overflow: hidden` on the card (it would clip the color picker
+	// popup and tooltips), so the header rounds its own top corners.
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: v.$space-md;
+		min-height: 56px;
+		padding: v.$space-md v.$space-2xl;
+		border-bottom: 1px solid #f0f0f1;
+		border-radius: (v.$radius-card - 1) (v.$radius-card - 1) 0 0;
+		background: #fbfbfc;
+
+		.dashicons {
+			flex: 0 0 auto;
+			color: v.$nanobar-admin-text-muted;
+			font-size: 20px;
+			width: 20px;
+			height: 20px;
+		}
+
+		// A count badge or control pinned to the right of the title.
+		.nanobar-count-badge,
+		.nanobar-segmented {
+			margin-left: auto;
+		}
+
+		h2 {
+			margin: 0;
+			font-size: 17px;
+			line-height: 1.3;
+			font-weight: 600;
+			color: v.$nanobar-admin-text;
+		}
+	}
+
+	&__body {
+		flex: 1 1 auto;
+		padding: v.$space-2xl;
+	}
+}
+
+// Below 1100px Appearance and Preview no longer fit side by side.
+@media (max-width: 1100px) {
+	.nanobar-bento-pair {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 782px) {
+	.nanobar-bento-grid {
+		grid-template-columns: 1fr;
+		gap: v.$space-lg;
+	}
+
+	.nanobar-bento-pair {
+		grid-column: auto;
+		gap: v.$space-lg;
+	}
+
+	.nanobar-bento-card {
+		&--general,
+		&--roles,
+		&--menu-items,
+		&--quick-links {
+			grid-column: auto;
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.nanobar-bento-grid,
+	.nanobar-bento-pair {
+		gap: v.$space-md;
+	}
+
+	.nanobar-bento-card__header {
+		padding-inline: v.$space-xl;
+	}
+
+	.nanobar-bento-card__body {
+		padding: v.$space-xl;
+	}
+}
+
+@media (max-width: 480px) {
+	.nanobar-bento-card__body {
+		padding: v.$space-lg;
+	}
+}

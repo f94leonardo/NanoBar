@@ -1,0 +1,155 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - nanobar.php
+        - src/
+        - uninstall.php
+
+    excludePaths:
+        - vendor/
+        - languages/
+
+    tmpDir: .phpstan-cache
+
+    # Every ignored error below is a genuine defensive check against values
+    # PHPStan's type sources (a WordPress core stub, and this plugin's own
+    # hook docblocks) declare as narrower than what can actually reach that
+    # code at runtime — not redundant checks to be deleted. See the comments
+    # at each site in src/Frontend/Menus.php for the concrete misuse each one
+    # guards against. A single guard condition can produce several of these
+    # (is_array(), is_callable(), the ?? / || around them, …) since PHPStan
+    # reports each narrowed sub-expression separately.
+    ignoreErrors:
+        -
+            # The `nanobar_cache_plugins`, `nanobar_command_palette_items`,
+            # `nanobar_options` and `nanobar_logout_redirect` filters are
+            # documented with a precise return shape, but nothing enforces it
+            # at runtime: get_active_cache_plugin() and
+            # Commands::get_extra_items() re-validate every field they print
+            # (label/url/settings_url/id/icon), and Options::get() and
+            # get_logout_link() fall back to the unfiltered value when a
+            # filter returns the wrong type.
+            message: '#^Offset ''(label|settings_url|id)'' on array\{id: string, label: string, is_active: callable\(\): bool, purge_all_node_id: string\|null, purge_page_node_id: string\|null, settings_url: string\} in isset\(\) always exists and is not nullable\.$#'
+            identifier: isset.offset
+            path: src/Frontend/Menus.php
+            count: 3
+        -
+            message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Menus.php
+            count: 1
+        -
+            message: '#^Offset ''icon'' on array\{label: string, url: string, icon: string, is_visible: callable\(\): bool\} in isset\(\) always exists and is not nullable\.$#'
+            identifier: isset.offset
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            message: '#^Call to function is_array\(\) with array<string, mixed> will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Settings/Options.php
+            count: 1
+        -
+            # php-stubs/wordpress-stubs declares WP_Post_Type::$menu_icon as
+            # `string`, but the actual property is untyped and defaults to
+            # null; a plugin's register_post_type() call can set it to any
+            # truthy non-string value (a known real-world misconfiguration),
+            # which would otherwise reach str_starts_with() and throw.
+            message: '#^Right side of && is always true\.$#'
+            identifier: booleanAnd.rightAlwaysTrue
+            path: src/Frontend/Menus.php
+            count: 4
+        -
+            # This plugin's own `nanobar_elementor_post_types` filter is
+            # documented (for filter authors) as returning array<int, string>,
+            # but nothing enforces that at runtime — a filter callback
+            # returning something else (e.g. __return_false) would otherwise
+            # reach in_array() and throw.
+            message: '#^Call to function is_array\(\) with array<int, string> will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Menus.php
+            count: 1
+        -
+            # Same reasoning, for the `nanobar_cache_plugins` filter this time
+            # (get_cache_plugin_registry()'s own return statement): documented
+            # as returning the shape below, but a filter callback can return
+            # anything.
+            message: '#^Call to function is_array\(\) with array<int, array\{id: string, label: string, is_active: callable\(\): bool, purge_all_node_id: string\|null, purge_page_node_id: string\|null, settings_url: string\}> will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Menus.php
+            count: 1
+        -
+            # get_active_cache_plugin()'s per-entry guard: a `nanobar_cache_plugins`
+            # filter callback can append/edit an entry that isn't even an
+            # array, or whose `is_active` isn't callable (missing key, a
+            # typo, null) — call_user_func() on that would otherwise throw a
+            # fatal TypeError on every frontend render.
+            message: '#^Call to function is_array\(\) with array\{id: string, label: string, is_active: callable\(\): bool, purge_all_node_id: string\|null, purge_page_node_id: string\|null, settings_url: string\} will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Menus.php
+            count: 1
+        -
+            message: '#^Call to function is_callable\(\) with callable\(\): bool will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Menus.php
+            count: 1
+        -
+            message: '#^Offset ''is_active'' on array\{id: string, label: string, is_active: callable\(\): bool, purge_all_node_id: string\|null, purge_page_node_id: string\|null, settings_url: string\} on left side of \?\? always exists and is not nullable\.$#'
+            identifier: nullCoalesce.offset
+            path: src/Frontend/Menus.php
+            count: 1
+        -
+            message: '#^Result of \|\| is always false\.$#'
+            identifier: booleanOr.alwaysFalse
+            path: src/Frontend/Menus.php
+            count: 1
+        -
+            # Same reasoning again, one more time, for Commands::get_registry()'s
+            # own `nanobar_command_palette_items` filter and
+            # get_extra_items()'s per-entry guard — see the comments at each
+            # site in src/Frontend/Commands.php.
+            message: '#^Call to function is_array\(\) with array<int, array\{label: string, url: string, icon: string, is_visible: callable\(\): bool\}> will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            message: '#^Call to function is_array\(\) with array\{label: string, url: string, icon: string, is_visible: callable\(\): bool\} will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            message: '#^Call to function is_callable\(\) with callable\(\): bool will always evaluate to true\.$#'
+            identifier: function.alreadyNarrowedType
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            message: '#^Offset ''is_visible'' on array\{label: string, url: string, icon: string, is_visible: callable\(\): bool\} on left side of \?\? always exists and is not nullable\.$#'
+            identifier: nullCoalesce.offset
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            message: '#^Result of \|\| is always false\.$#'
+            identifier: booleanOr.alwaysFalse
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            message: '#^Offset ''label'' on array\{label: string, url: string, icon: string, is_visible: callable\(\): bool\} in isset\(\) always exists and is not nullable\.$#'
+            identifier: isset.offset
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            message: '#^Offset ''url'' on array\{label: string, url: string, icon: string, is_visible: callable\(\): bool\} in isset\(\) always exists and is not nullable\.$#'
+            identifier: isset.offset
+            path: src/Frontend/Commands.php
+            count: 1
+        -
+            # The built-in registry entries above always set `icon` to a
+            # non-empty string, but a `nanobar_command_palette_items` filter
+            # entry might not — is_string() guards against anything else
+            # reaching the panel's markup.
+            message: '#^Right side of && is always true\.$#'
+            identifier: booleanAnd.rightAlwaysTrue
+            path: src/Frontend/Commands.php
+            count: 3

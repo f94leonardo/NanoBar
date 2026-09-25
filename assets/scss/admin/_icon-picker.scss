@@ -1,0 +1,129 @@
+// Block: .nanobar-icon-picker — the "Quick links" icon grid overlay.
+//
+// A single shared instance built lazily by admin-settings.js
+// (buildIconPicker()) the first time any row's icon trigger button is
+// clicked, populated from `nanobarSettings.allDashicons`
+// (Settings\Page::get_all_dashicons()). Not tied to any one row: which row's
+// hidden [icon] field gets updated is tracked in JS, not in this markup.
+
+@use "variables" as v;
+
+.nanobar-icon-picker {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 10vh 16px 16px;
+
+	&[hidden] {
+		display: none;
+	}
+
+	&__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+	}
+
+	&__dialog {
+		position: relative;
+		width: 100%;
+		max-width: 520px;
+		max-height: 70vh;
+		display: flex;
+		flex-direction: column;
+		background: #fff;
+		border-radius: 8px;
+		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+		overflow: hidden;
+	}
+
+	&__search {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 14px;
+		border-bottom: 1px solid v.$nanobar-admin-border;
+		flex: 0 0 auto;
+
+		.dashicons {
+			color: v.$nanobar-admin-text-muted;
+			flex: 0 0 auto;
+		}
+	}
+
+	&__search-input {
+		flex: 1 1 auto;
+		border: none;
+		background: none;
+		font-size: 15px;
+		color: v.$nanobar-admin-text;
+
+		&:focus {
+			outline: none;
+			box-shadow: none;
+		}
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+		gap: 4px;
+		padding: 12px;
+		overflow-y: auto;
+		flex: 1 1 auto;
+	}
+
+	&__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		aspect-ratio: 1;
+		padding: 0;
+		border: 1px solid transparent;
+		border-radius: 6px;
+		background: none;
+		cursor: pointer;
+		color: v.$nanobar-admin-text;
+		transition:
+			background 0.1s ease,
+			border-color 0.1s ease;
+
+		.dashicons {
+			font-size: 20px;
+			width: 20px;
+			height: 20px;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background: rgba(v.$nanobar-admin-accent, 0.1);
+			border-color: v.$nanobar-admin-accent;
+			outline: none;
+		}
+	}
+
+	&__empty {
+		margin: 0;
+		padding: 24px 14px;
+		text-align: center;
+		color: v.$nanobar-admin-text-muted;
+		font-size: 13px;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.nanobar-icon-picker {
+		padding: 5vh 10px 10px;
+
+		&__grid {
+			grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+		}
+	}
+}

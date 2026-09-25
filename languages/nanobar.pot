@@ -1,0 +1,716 @@
+# Copyright (C) 2026 f94leonardo
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: NanoBar Compact Admin Toolbar 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/NanoBar\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-24T20:30:18+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: nanobar\n"
+
+#. Plugin Name of the plugin
+#: nanobar.php
+msgid "NanoBar Compact Admin Toolbar"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: nanobar.php
+msgid "https://github.com/f94leonardo/NanoBar"
+msgstr ""
+
+#. Description of the plugin
+#: nanobar.php
+msgid "Replaces WordPress's classic admin bar, on the frontend, with a"
+msgstr ""
+
+#. Author of the plugin
+#: nanobar.php
+msgid "f94leonardo"
+msgstr ""
+
+#. Author URI of the plugin
+#: nanobar.php
+msgid "https://github.com/f94leonardo"
+msgstr ""
+
+#: src/Frontend/Commands.php:42
+msgid "Your profile"
+msgstr ""
+
+#: src/Frontend/Commands.php:48
+msgid "Comments"
+msgstr ""
+
+#: src/Frontend/Commands.php:54
+msgid "Users"
+msgstr ""
+
+#: src/Frontend/Commands.php:60
+msgid "Themes"
+msgstr ""
+
+#: src/Frontend/Commands.php:66
+msgid "Tools"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:44
+#: src/Settings/View.php:65
+msgid "Edit content"
+msgstr ""
+
+#. translators: %s: content type name (e.g. Page, Post).
+#. translators: %s: taxonomy name (e.g. Category, Tag).
+#: src/Frontend/ContextLinks.php:47
+#: src/Frontend/ContextLinks.php:70
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:67
+msgid "Edit term"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:91
+msgid "Edit user"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:112
+msgid "Manage posts from this period"
+msgstr ""
+
+#. translators: %s: plural content type name.
+#: src/Frontend/ContextLinks.php:127
+#, php-format
+msgid "Manage %s"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:344
+#: src/Frontend/ContextLinks.php:345
+msgid "Appearance: Themes"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:355
+#: src/Frontend/ContextLinks.php:356
+#: src/Frontend/ContextLinks.php:374
+#: src/Settings/View.php:69
+msgid "Edit site"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:370
+msgid "Current template"
+msgstr ""
+
+#. translators: %s: block template name.
+#: src/Frontend/ContextLinks.php:376
+#, php-format
+msgid "Template: %s"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:402
+#: src/Frontend/ContextLinks.php:403
+msgid "Edit with Elementor"
+msgstr ""
+
+#: src/Frontend/ContextLinks.php:412
+#: src/Frontend/ContextLinks.php:413
+msgid "Elementor Theme Builder"
+msgstr ""
+
+#: src/Frontend/Menus.php:36
+#: src/Frontend/Renderer.php:208
+#: src/Frontend/Renderer.php:210
+#: src/Frontend/Renderer.php:235
+#: src/Frontend/Renderer.php:237
+#: src/Settings/View.php:57
+msgid "Dashboard"
+msgstr ""
+
+#: src/Frontend/Menus.php:45
+#: src/Frontend/Menus.php:146
+msgid "Media"
+msgstr ""
+
+#: src/Frontend/Menus.php:53
+msgid "Posts"
+msgstr ""
+
+#: src/Frontend/Menus.php:61
+msgid "Pages"
+msgstr ""
+
+#: src/Frontend/Menus.php:68
+msgid "Plugins"
+msgstr ""
+
+#: src/Frontend/Menus.php:73
+msgid "Settings"
+msgstr ""
+
+#: src/Frontend/Menus.php:80
+msgid "Contact"
+msgstr ""
+
+#: src/Frontend/Menus.php:402
+#: src/Settings/View.php:81
+msgid "Log out"
+msgstr ""
+
+#: src/Frontend/Renderer.php:105
+msgid "Type a command or search…"
+msgstr ""
+
+#: src/Frontend/Renderer.php:106
+msgid "No matching commands."
+msgstr ""
+
+#: src/Frontend/Renderer.php:107
+msgid "Quick commands"
+msgstr ""
+
+#. translators: %s: cache plugin name (e.g. WP Rocket).
+#: src/Frontend/Renderer.php:182
+#, php-format
+msgid "Clear cache (%s)"
+msgstr ""
+
+#. translators: %s: cache plugin name (e.g. WP Rocket).
+#: src/Frontend/Renderer.php:185
+#, php-format
+msgid "Clear cache for the current page (%s)"
+msgstr ""
+
+#: src/Frontend/Renderer.php:200
+msgid "Open/close quick admin menu"
+msgstr ""
+
+#: src/Frontend/Renderer.php:212
+msgid "Open Dashboard submenu"
+msgstr ""
+
+#: src/Frontend/Renderer.php:244
+#: src/Frontend/Renderer.php:246
+#: src/Settings/View.php:61
+msgid "New"
+msgstr ""
+
+#: src/Frontend/Renderer.php:248
+msgid "Open New submenu"
+msgstr ""
+
+#: src/Frontend/Renderer.php:280
+#: src/Frontend/Renderer.php:316
+#: src/Settings/View.php:73
+msgid "Cache"
+msgstr ""
+
+#: src/Frontend/Renderer.php:282
+msgid "Open Cache submenu"
+msgstr ""
+
+#. translators: %s: cache plugin name (e.g. WP Rocket).
+#: src/Frontend/Renderer.php:286
+#: src/Frontend/Renderer.php:288
+#: src/Frontend/Renderer.php:314
+#, php-format
+msgid "%s settings"
+msgstr ""
+
+#: src/Frontend/Renderer.php:291
+#: src/Frontend/Renderer.php:293
+msgid "Clear all cache"
+msgstr ""
+
+#: src/Frontend/Renderer.php:297
+#: src/Frontend/Renderer.php:299
+msgid "Clear cache for the current page"
+msgstr ""
+
+#: src/Settings/Backup.php:55
+#: src/Settings/Backup.php:78
+msgid "You do not have permission to do this."
+msgstr ""
+
+#: src/Settings/Backup.php:152
+msgid "Export"
+msgstr ""
+
+#: src/Settings/Backup.php:155
+msgid "Download your saved settings as a JSON file, to keep a copy or to reuse them on another site."
+msgstr ""
+
+#: src/Settings/Backup.php:157
+msgid "General options, enabled roles and appearance"
+msgstr ""
+
+#: src/Settings/Backup.php:158
+msgid "Panel items, including which show on phones"
+msgstr ""
+
+#: src/Settings/Backup.php:159
+msgid "Your quick links"
+msgstr ""
+
+#: src/Settings/Backup.php:164
+msgid "Download settings"
+msgstr ""
+
+#: src/Settings/Backup.php:173
+#: src/Settings/Page.php:150
+msgid "Import"
+msgstr ""
+
+#: src/Settings/Backup.php:176
+msgid "Restore settings from a NanoBar export. This replaces the current saved settings; the file is validated exactly like a normal save."
+msgstr ""
+
+#: src/Settings/Backup.php:184
+msgid "Drop your settings file here"
+msgstr ""
+
+#: src/Settings/Backup.php:186
+msgid "or click to browse"
+msgstr ""
+
+#: src/Settings/Backup.php:188
+msgid ".json, up to 256 KB"
+msgstr ""
+
+#: src/Settings/Backup.php:197
+#: src/Settings/Backup.php:199
+msgid "Remove file"
+msgstr ""
+
+#: src/Settings/Backup.php:208
+msgid "Import settings"
+msgstr ""
+
+#: src/Settings/Backup.php:245
+msgid "Settings imported."
+msgstr ""
+
+#: src/Settings/Backup.php:246
+msgid "No file was uploaded. Choose a NanoBar settings file (.json) first."
+msgstr ""
+
+#: src/Settings/Backup.php:247
+#: src/Settings/Page.php:152
+msgid "The file is too large to be a NanoBar settings export."
+msgstr ""
+
+#: src/Settings/Backup.php:248
+#: src/Settings/Page.php:151
+msgid "That file is not a valid NanoBar settings export."
+msgstr ""
+
+#: src/Settings/Page.php:42
+#: src/Settings/Page.php:43
+#: src/Settings/View.php:140
+msgid "NanoBar"
+msgstr ""
+
+#. translators: 1: number of currently visible items, 2: total number of items.
+#: src/Settings/Page.php:123
+#: src/Settings/View.php:438
+#, php-format
+msgid "%1$d of %2$d active"
+msgstr ""
+
+#: src/Settings/Page.php:130
+msgid "Enter a label."
+msgstr ""
+
+#: src/Settings/Page.php:131
+msgid "Enter a link."
+msgstr ""
+
+#: src/Settings/Page.php:132
+msgid "Only links to this site are allowed (e.g. /page/)."
+msgstr ""
+
+#: src/Settings/Page.php:133
+msgid "Fix the highlighted quick links before saving."
+msgstr ""
+
+#: src/Settings/Page.php:135
+#: src/Settings/View.php:648
+msgid "Choose an icon"
+msgstr ""
+
+#: src/Settings/Page.php:136
+msgid "Search icons…"
+msgstr ""
+
+#: src/Settings/Page.php:137
+msgid "No icons found."
+msgstr ""
+
+#. translators: 1: minimum size with its unit (e.g. 32px), 2: maximum size with its unit (e.g. 72px).
+#: src/Settings/Page.php:139
+#: src/Settings/View.php:599
+#, php-format
+msgid "From %1$s to %2$s."
+msgstr ""
+
+#: src/Settings/Page.php:141
+msgid "Close notification"
+msgstr ""
+
+#: src/Settings/Page.php:146
+msgid "Restore every NanoBar setting to its default value? Nothing is saved until you click Save changes."
+msgstr ""
+
+#: src/Settings/Page.php:147
+msgid "Restore"
+msgstr ""
+
+#: src/Settings/Page.php:148
+msgid "Cancel"
+msgstr ""
+
+#: src/Settings/Page.php:149
+msgid "Replace your current NanoBar settings with the ones in this file? This cannot be undone."
+msgstr ""
+
+#. translators: 1: NanoBar version that produced the export, 2: number of quick links in it.
+#: src/Settings/Page.php:154
+#, php-format
+msgid "Export from NanoBar %1$s · %2$d quick links"
+msgstr ""
+
+#: src/Settings/Page.php:155
+msgid "Defaults restored. Save changes to keep them."
+msgstr ""
+
+#: src/Settings/Page.php:156
+msgid "Undo"
+msgstr ""
+
+#: src/Settings/Page.php:158
+msgid "Unsaved changes"
+msgstr ""
+
+#: src/Settings/Page.php:159
+msgid "Saving…"
+msgstr ""
+
+#: src/Settings/Page.php:160
+msgid "Settings saved."
+msgstr ""
+
+#: src/Settings/Page.php:161
+msgid "Could not save the settings. Please try again."
+msgstr ""
+
+#: src/Settings/Page.php:162
+msgid "No items selected."
+msgstr ""
+
+#. translators: 1: number of quick links currently configured, 2: maximum number allowed.
+#: src/Settings/Page.php:164
+#: src/Settings/View.php:520
+#, php-format
+msgid "%1$d of %2$d used"
+msgstr ""
+
+#. translators: %s: name of the detected cache plugin (e.g. WP Rocket).
+#: src/Settings/View.php:107
+#, php-format
+msgid "Detected: %s"
+msgstr ""
+
+#: src/Settings/View.php:108
+#: src/Settings/View.php:112
+msgid "Not detected"
+msgstr ""
+
+#: src/Settings/View.php:112
+msgid "Detected"
+msgstr ""
+
+#: src/Settings/View.php:141
+msgid "Configure the floating panel that replaces the classic admin bar on the frontend."
+msgstr ""
+
+#: src/Settings/View.php:154
+#: src/Settings/View.php:156
+msgid "Restore defaults"
+msgstr ""
+
+#: src/Settings/View.php:158
+#: src/Settings/View.php:160
+msgid "Save changes"
+msgstr ""
+
+#: src/Settings/View.php:164
+msgid "Settings sections"
+msgstr ""
+
+#: src/Settings/View.php:165
+#: src/Settings/View.php:185
+msgid "General"
+msgstr ""
+
+#: src/Settings/View.php:166
+#: src/Settings/View.php:226
+msgid "Enabled roles"
+msgstr ""
+
+#: src/Settings/View.php:167
+#: src/Settings/View.php:268
+msgid "Appearance"
+msgstr ""
+
+#: src/Settings/View.php:168
+#: src/Settings/View.php:433
+msgid "Menu items"
+msgstr ""
+
+#: src/Settings/View.php:169
+#: src/Settings/View.php:515
+msgid "Quick links"
+msgstr ""
+
+#: src/Settings/View.php:170
+msgid "Backup"
+msgstr ""
+
+#: src/Settings/View.php:192
+msgid "Enable NanoBar"
+msgstr ""
+
+#: src/Settings/View.php:192
+msgid "Replaces the classic admin bar on the frontend."
+msgstr ""
+
+#: src/Settings/View.php:200
+msgid "Command palette"
+msgstr ""
+
+#: src/Settings/View.php:200
+msgid "Press Cmd/Ctrl+K to jump to any panel item or common wp-admin page."
+msgstr ""
+
+#: src/Settings/View.php:208
+msgid "Force admin bar for Query Monitor"
+msgstr ""
+
+#: src/Settings/View.php:208
+msgid "Keeps the native bar available, as Query Monitor needs it."
+msgstr ""
+
+#: src/Settings/View.php:229
+msgid "Choose which roles can see NanoBar. The Subscriber role is not available."
+msgstr ""
+
+#: src/Settings/View.php:230
+#: src/Settings/View.php:447
+msgid "Bulk select"
+msgstr ""
+
+#: src/Settings/View.php:233
+#: src/Settings/View.php:450
+msgid "Select all"
+msgstr ""
+
+#: src/Settings/View.php:237
+#: src/Settings/View.php:454
+msgid "Select none"
+msgstr ""
+
+#: src/Settings/View.php:272
+msgid "Icon"
+msgstr ""
+
+#: src/Settings/View.php:275
+#: src/Settings/View.php:287
+msgid "Icon size"
+msgstr ""
+
+#: src/Settings/View.php:278
+msgid "Size unit"
+msgstr ""
+
+#: src/Settings/View.php:289
+msgid "rem follows your site's root font size (16px by default), so the button scales with it."
+msgstr ""
+
+#: src/Settings/View.php:293
+msgid "Icon color"
+msgstr ""
+
+#: src/Settings/View.php:307
+msgid "Auto (match system)"
+msgstr ""
+
+#: src/Settings/View.php:308
+msgid "Light"
+msgstr ""
+
+#: src/Settings/View.php:309
+msgid "Dark"
+msgstr ""
+
+#: src/Settings/View.php:313
+msgid "Panel"
+msgstr ""
+
+#: src/Settings/View.php:319
+msgid "Icons only"
+msgstr ""
+
+#: src/Settings/View.php:319
+msgid "Hides labels; compact mode is automatic on narrow screens."
+msgstr ""
+
+#: src/Settings/View.php:324
+msgid "Color scheme"
+msgstr ""
+
+#: src/Settings/View.php:330
+msgid "Only affects the dropdown menu; the toggle button always keeps the color chosen above."
+msgstr ""
+
+#: src/Settings/View.php:359
+msgid "Top"
+msgstr ""
+
+#: src/Settings/View.php:360
+msgid "Bottom"
+msgstr ""
+
+#: src/Settings/View.php:363
+msgid "Left"
+msgstr ""
+
+#: src/Settings/View.php:364
+msgid "Center"
+msgstr ""
+
+#: src/Settings/View.php:365
+msgid "Right"
+msgstr ""
+
+#. translators: %s: screen edge where "Center" is available (e.g. Bottom).
+#: src/Settings/View.php:368
+#, php-format
+msgid "Center is only available with the %s position."
+msgstr ""
+
+#: src/Settings/View.php:373
+msgid "Preview"
+msgstr ""
+
+#: src/Settings/View.php:374
+msgid "Preview device"
+msgstr ""
+
+#: src/Settings/View.php:377
+msgid "Desktop"
+msgstr ""
+
+#: src/Settings/View.php:381
+msgid "Mobile"
+msgstr ""
+
+#: src/Settings/View.php:386
+msgid "Preview of the NanoBar panel"
+msgstr ""
+
+#: src/Settings/View.php:388
+msgid "Position"
+msgstr ""
+
+#: src/Settings/View.php:404
+msgid "Show or hide the panel in the preview"
+msgstr ""
+
+#: src/Settings/View.php:410
+msgid "Click a spot in the preview to move the button."
+msgstr ""
+
+#: src/Settings/View.php:446
+msgid "Choose which items appear in the panel, when the user has permission for them. The phone button adds an item to the compact bottom bar on phones (up to 580px wide)."
+msgstr ""
+
+#: src/Settings/View.php:480
+msgid "Show on mobile"
+msgstr ""
+
+#. translators: %s: menu item name (e.g. Dashboard).
+#: src/Settings/View.php:484
+#, php-format
+msgid "Show %s on mobile"
+msgstr ""
+
+#: src/Settings/View.php:491
+msgid "Prefer Elementor when available"
+msgstr ""
+
+#: src/Settings/View.php:491
+msgid "Elementor detected"
+msgstr ""
+
+#: src/Settings/View.php:491
+msgid "Elementor not detected"
+msgstr ""
+
+#: src/Settings/View.php:492
+msgid "Links to Elementor's editor or Theme Builder when they apply to the current view. Needs \"Edit site\" to be on."
+msgstr ""
+
+#. translators: %d: maximum number of quick links allowed.
+#: src/Settings/View.php:532
+#, php-format
+msgid "Shortcuts to pages on this site, such as an admin screen or a documentation page. External links are not allowed. Up to %d."
+msgstr ""
+
+#: src/Settings/View.php:545
+msgid "No shortcuts yet"
+msgstr ""
+
+#: src/Settings/View.php:546
+msgid "Add a link to reach any page of this site in one click from the panel."
+msgstr ""
+
+#: src/Settings/View.php:550
+msgid "Add link"
+msgstr ""
+
+#: src/Settings/View.php:641
+msgid "Drag to reorder"
+msgstr ""
+
+#: src/Settings/View.php:654
+#: src/Settings/View.php:655
+msgid "Label"
+msgstr ""
+
+#: src/Settings/View.php:669
+msgid "URL"
+msgstr ""
+
+#: src/Settings/View.php:670
+msgid "/internal-page/"
+msgstr ""
+
+#: src/Settings/View.php:674
+msgid "Remove this link"
+msgstr ""
+
+#: src/Settings/View.php:680
+msgid "Visible to:"
+msgstr ""
+
+#: src/Settings/View.php:690
+msgid "Visible on mobile"
+msgstr ""
+
+#: src/Settings/View.php:692
+msgid "(none checked = same roles as NanoBar itself)"
+msgstr ""

@@ -1,0 +1,209 @@
+// Block: .nanobar-notices-container — restyled dismissible settings notices.
+
+@use "variables" as v;
+
+.nanobar-notices-container {
+	margin-top: 24px;
+	padding: 0 2px;
+}
+
+.nanobar-settings-wrap .notice {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 0 12px;
+	padding: 14px 16px;
+	border-left: 4px solid;
+	border-radius: 6px;
+	background: #fff;
+	animation: nanobar-notice-slide-in 0.3s ease-out;
+
+	&.is-dismissing {
+		animation: nanobar-notice-fade-out 0.4s ease-out forwards;
+	}
+
+	p {
+		margin: 0;
+		flex: 1 1 auto;
+		font-size: 16px;
+		line-height: 1.5;
+	}
+
+	.notice-icon::before {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		flex: 0 0 20px;
+		font-size: 18px;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	.notice-dismiss {
+		flex: 0 0 auto;
+		position: relative;
+		padding: 0;
+		min-width: 24px;
+		height: 24px;
+		line-height: 24px;
+		color: #9ca0a5;
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 16px;
+		opacity: 0.6;
+		transition: opacity 0.15s ease;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	&.notice-success {
+		border-left-color: v.$nanobar-admin-success;
+		background: #f0f6f0;
+
+		.notice-icon::before {
+			content: "\2713";
+			color: v.$nanobar-admin-success;
+		}
+	}
+
+	&.notice-error {
+		border-left-color: v.$nanobar-admin-error;
+		background: #f8f0f1;
+
+		.notice-icon::before {
+			content: "!";
+			color: v.$nanobar-admin-error;
+		}
+	}
+
+	&.notice-warning {
+		border-left-color: v.$nanobar-admin-warning;
+		background: #fefaf0;
+
+		.notice-icon::before {
+			content: "\26a0";
+			color: v.$nanobar-admin-warning;
+		}
+	}
+}
+
+@keyframes nanobar-notice-slide-in {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes nanobar-notice-fade-out {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	.nanobar-notices-container {
+		margin-top: 20px;
+		padding: 0;
+	}
+
+	.nanobar-settings-wrap .notice {
+		padding: 12px;
+		gap: 10px;
+	}
+}
+
+// Toast stack (admin-settings.js): save result, "Restore defaults" confirm
+// and its undo. Bottom-center, above everything but the icon-picker overlay.
+.nanobar-toasts {
+	position: fixed;
+	bottom: 24px;
+	left: 50%;
+	z-index: 99999;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: v.$space-sm;
+	width: max-content;
+	max-width: calc(100vw - 32px);
+	transform: translateX(-50%);
+	pointer-events: none;
+}
+
+.nanobar-toast {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: v.$space-sm v.$space-lg;
+	padding: v.$space-md v.$space-lg;
+	border-left: 4px solid v.$nanobar-admin-accent;
+	border-radius: v.$radius-control;
+	background: v.$nanobar-admin-text;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+	color: #fff;
+	font-size: 14px;
+	line-height: 1.4;
+	pointer-events: auto;
+	animation: nanobar-notice-slide-in 0.2s ease-out;
+
+	&--success {
+		border-left-color: v.$nanobar-admin-success;
+	}
+
+	&--error {
+		border-left-color: v.$nanobar-admin-error;
+	}
+
+	&__actions {
+		display: flex;
+		gap: v.$space-sm;
+		margin-left: auto;
+	}
+
+	&__btn {
+		min-height: 32px;
+		padding: 0 v.$space-md;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: v.$radius-control;
+		background: transparent;
+		color: #fff;
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			background: rgba(255, 255, 255, 0.16);
+		}
+
+		&--primary {
+			border-color: #fff;
+			background: #fff;
+			color: v.$nanobar-admin-text;
+
+			&:hover,
+			&:focus-visible {
+				background: rgba(255, 255, 255, 0.85);
+			}
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nanobar-settings-wrap .notice,
+	.nanobar-toast {
+		animation: none;
+	}
+}

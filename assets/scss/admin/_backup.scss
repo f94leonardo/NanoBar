@@ -1,0 +1,278 @@
+// Blocks: .nanobar-backup-pair / .nanobar-dropzone / .nanobar-btn — the
+// Export | Import cards below the settings form, and the buttons they use.
+// The pair reuses .nanobar-bento-pair (two equal columns, stacked below
+// 1100px); the drop zone is built by assets/js/admin-backup.js on top of a
+// plain file input, which stays usable without it.
+
+@use "variables" as v;
+
+.nanobar-backup-pair {
+	margin-top: v.$space-xl;
+	// Anchor target of the header nav: land below the sticky header.
+	scroll-margin-top: var(--nanobar-sticky-top, 152px);
+}
+
+.nanobar-backup {
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: v.$space-lg;
+
+		.nanobar-help {
+			margin: 0;
+		}
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: v.$space-sm;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 14px;
+
+		li {
+			display: flex;
+			align-items: center;
+			gap: v.$space-sm;
+			margin: 0;
+		}
+
+		.dashicons {
+			flex: 0 0 auto;
+			color: v.$nanobar-admin-success;
+		}
+	}
+
+	// Pinned to the bottom so both cards' buttons line up.
+	&__actions {
+		display: flex;
+		margin-top: auto;
+	}
+
+	&__form {
+		// The form is the card body itself.
+		margin: 0;
+	}
+
+	&__summary {
+		min-height: 20px;
+		margin: 0;
+		font-size: 13px;
+		line-height: 1.5;
+		color: v.$nanobar-admin-text-muted;
+
+		&:empty {
+			display: none;
+		}
+
+		&.is-error {
+			color: v.$nanobar-admin-error;
+			font-weight: 600;
+		}
+	}
+}
+
+// Buttons: 44px tall like the fields, an icon next to the label, a clear
+// focus ring and disabled state.
+.nanobar-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: v.$space-sm;
+	min-height: 44px;
+	padding: 0 v.$space-2xl;
+	border: 1px solid v.$nanobar-admin-control-border;
+	border-radius: v.$radius-control;
+	background: #fff;
+	color: v.$nanobar-admin-text;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		box-shadow 0.15s ease;
+
+	.dashicons {
+		width: 18px;
+		height: 18px;
+		font-size: 18px;
+	}
+
+	&:hover,
+	&:focus-visible {
+		border-color: v.$nanobar-admin-accent;
+		color: v.$nanobar-admin-accent;
+	}
+
+	&:focus-visible {
+		outline: 2px solid v.$nanobar-admin-accent;
+		outline-offset: 2px;
+	}
+
+	&--primary {
+		border-color: v.$nanobar-admin-accent;
+		background: v.$nanobar-admin-accent;
+		color: #fff;
+
+		&:hover,
+		&:focus-visible {
+			border-color: #135e96;
+			background: #135e96;
+			color: #fff;
+		}
+	}
+
+	&:disabled,
+	&[aria-disabled="true"] {
+		border-color: v.$nanobar-admin-border;
+		background: #f0f0f1;
+		color: #8c8f94;
+		cursor: not-allowed;
+	}
+}
+
+// Drop zone: the whole dashed area is the file input's label, so a click
+// anywhere opens the picker; dropping a file works too.
+.nanobar-dropzone {
+	position: relative;
+	border: 2px dashed v.$nanobar-admin-control-border;
+	border-radius: v.$radius-tile;
+	background: #fafafa;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease;
+
+	// The real input stays in the DOM (and in the tab order), just not
+	// painted: its visible face is the label below.
+	&__input {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	&:hover,
+	&:focus-within {
+		border-color: v.$nanobar-admin-accent;
+		background: rgba(v.$nanobar-admin-accent, 0.04);
+	}
+
+	&:focus-within {
+		outline: 2px solid v.$nanobar-admin-accent;
+		outline-offset: 2px;
+	}
+
+	&.is-dragover {
+		border-color: v.$nanobar-admin-accent;
+		border-style: solid;
+		background: rgba(v.$nanobar-admin-accent, 0.1);
+	}
+
+	&.is-invalid {
+		border-color: v.$nanobar-admin-error;
+		background: rgba(v.$nanobar-admin-error, 0.04);
+	}
+
+	&__prompt {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: v.$space-xs;
+		padding: v.$space-2xl v.$space-lg;
+		text-align: center;
+		pointer-events: none;
+	}
+
+	&__icon {
+		width: 32px;
+		height: 32px;
+		font-size: 32px;
+		color: v.$nanobar-admin-accent;
+	}
+
+	&__title {
+		font-size: 15px;
+		font-weight: 600;
+		color: v.$nanobar-admin-text;
+	}
+
+	&__hint {
+		font-size: 13px;
+		color: v.$nanobar-admin-text-muted;
+	}
+
+	// Once a file is chosen the prompt gives way to the file row.
+	&.has-file &__prompt {
+		display: none;
+	}
+
+	&__file {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		gap: v.$space-md;
+		padding: v.$space-lg;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	&__file-icon {
+		flex: 0 0 auto;
+		width: 28px;
+		height: 28px;
+		font-size: 28px;
+		color: v.$nanobar-admin-accent;
+	}
+
+	&__file-info {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		min-width: 0;
+		gap: 2px;
+	}
+
+	&__file-name {
+		overflow: hidden;
+		font-weight: 600;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__file-meta {
+		font-size: 12px;
+		color: v.$nanobar-admin-text-muted;
+	}
+
+	&__remove {
+		display: flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: 1px solid transparent;
+		border-radius: v.$radius-control;
+		background: none;
+		color: v.$nanobar-admin-text-muted;
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			border-color: v.$nanobar-admin-error;
+			color: v.$nanobar-admin-error;
+		}
+	}
+}

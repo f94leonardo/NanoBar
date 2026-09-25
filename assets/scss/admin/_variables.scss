@@ -1,0 +1,29 @@
+// Shared tokens for the Settings → NanoBar admin page.
+// These mirror WordPress admin's own palette so the page blends in.
+
+$nanobar-admin-text: #1d2327;
+// Darker than WordPress admin's own muted gray (#646970): at the larger type
+// sizes used throughout this page, the lighter default no longer keeps
+// comfortable contrast against a white card background.
+$nanobar-admin-text-muted: #50575e;
+$nanobar-admin-border: #dcdcde;
+$nanobar-admin-border-hover: #c3c4c7;
+$nanobar-admin-control-border: #8c8f94;
+$nanobar-admin-accent: #2271b1;
+$nanobar-admin-success: #00a32a;
+$nanobar-admin-error: #d63638;
+$nanobar-admin-warning: #dba617;
+
+// Spacing scale — every gap/padding inside the cards comes from here so the
+// vertical rhythm stays consistent (fields 20px apart, a label 6px above its
+// control, a hint 6px below it, and so on).
+$space-xs: 6px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-xl: 20px;
+$space-2xl: 24px;
+
+$radius-card: 12px;
+$radius-tile: 8px;
+$radius-control: 6px;

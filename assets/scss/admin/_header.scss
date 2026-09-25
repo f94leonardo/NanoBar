@@ -1,0 +1,442 @@
+// Block: .nanobar-header — the gradient banner at the top of the settings page.
+
+@use "variables" as v;
+
+// The header collapses (.is-stuck) once it sticks, which shrinks the page
+// above the scroll anchor. With Chrome's scroll anchoring on, that shrink is
+// "corrected" by scrolling back up, un-sticking the header, which then grows
+// again — a visible flicker/vibration right at the threshold. This page owns
+// its scroll behavior, so anchoring is switched off for it.
+html:has(.nanobar-settings-wrap) {
+	overflow-anchor: none;
+	// Smooth jumps for the section nav, unless the user asked for less motion.
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html:has(.nanobar-settings-wrap) {
+		scroll-behavior: auto;
+	}
+}
+
+.nanobar-settings-wrap {
+	max-width: none;
+	margin-top: 20px;
+	background: transparent;
+}
+
+.nanobar-header {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin: 0 0 18px;
+	padding: 20px 26px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: #fff;
+	box-shadow: 0 8px 24px rgba(31, 41, 55, 0.12);
+	// (&__top) deliberately never wraps, at any width: title/icon (&__content) has
+	// min-width: 0 so it's always free to shrink first, which keeps
+	// Save/Restore (&__actions) on the same line, pinned to the right, no
+	// matter how narrow the header gets — wrapping onto a second line used
+	// to leave the actions row stranded at the *left* edge instead (a lone
+	// item on a wrapped flex line falls back to the main-axis start, not
+	// "space-between"'s usual far end), which read as broken, not responsive.
+	// Keeps Save/Restore reachable without scrolling back up on this long
+	// page. `--nanobar-admin-bar-h` is set by admin-settings.js
+	// (updateStickyOffsets()) from the admin bar's actual rendered height,
+	// not hardcoded, so it stays correct whether the bar is showing, its
+	// responsive (782px) height, or hidden for this user entirely.
+	position: sticky;
+	top: var(--nanobar-admin-bar-h, 32px);
+	z-index: 30;
+	transition: padding 0.15s ease;
+
+	&__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		flex-wrap: nowrap;
+	}
+
+	&__content {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex: 0 0 auto;
+	}
+
+	// Unsaved-changes / saving text next to the buttons (a live region, see
+	// Page::render()); collapses entirely while empty.
+	&__status {
+		padding: 4px 10px;
+		border-radius: 999px;
+		background: rgba(0, 0, 0, 0.22);
+		color: #fff;
+		font-size: 13px;
+		font-weight: 600;
+		white-space: nowrap;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	// Labelled header buttons (Restore defaults, Save changes). The label
+	// drops away (icon only, the `title` remains) once the header is stuck or
+	// the viewport gets narrow — see the .is-stuck / media rules below.
+	&__btn {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-width: 42px;
+		height: 42px;
+		flex: 0 0 auto;
+		padding: 0 16px;
+		// A control needs its own visible edge against the gradient to
+		// register as clickable, not just contrast for the glyph itself.
+		border: 1px solid rgba(255, 255, 255, 0.45);
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.18);
+		color: #fff;
+		font-size: 14px;
+		font-weight: 600;
+		white-space: nowrap;
+		cursor: pointer;
+		transition:
+			background 0.15s ease,
+			border-color 0.15s ease,
+			transform 0.1s ease;
+
+		.dashicons {
+			font-size: 20px;
+			width: 20px;
+			height: 20px;
+		}
+
+		&:hover {
+			background: rgba(255, 255, 255, 0.28);
+			border-color: rgba(255, 255, 255, 0.6);
+		}
+
+		&:focus-visible {
+			outline: 2px solid #fff;
+			outline-offset: 2px;
+		}
+
+		&:active {
+			transform: scale(0.96);
+		}
+
+		&[disabled] {
+			opacity: 0.7;
+			cursor: progress;
+		}
+
+		&--primary {
+			background: #fff;
+			border-color: #fff;
+			color: #5b4fc4;
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.88);
+			}
+		}
+
+		// Unsaved-changes dot (admin-settings.js's markDirty()): stays
+		// visible at a glance even when the label is collapsed.
+		&.is-dirty::before {
+			content: "";
+			position: absolute;
+			top: -3px;
+			right: -3px;
+			width: 11px;
+			height: 11px;
+			border-radius: 50%;
+			background: #f0b849;
+			border: 2px solid #764ba2;
+		}
+	}
+
+	// Section anchors. Horizontally scrollable on narrow screens instead of
+	// wrapping into a second/third row of the sticky header.
+	.nanobar-nav {
+		display: flex;
+		gap: 6px;
+		overflow-x: auto;
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		a {
+			flex: 0 0 auto;
+			padding: 6px 14px;
+			border-radius: 999px;
+			color: rgba(255, 255, 255, 0.92);
+			font-size: 13px;
+			font-weight: 600;
+			text-decoration: none;
+			transition: background 0.15s ease;
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.18);
+				color: #fff;
+			}
+
+			&:focus-visible {
+				outline: 2px solid #fff;
+				outline-offset: 1px;
+			}
+
+			&.is-current {
+				background: rgba(255, 255, 255, 0.9);
+				color: #5b4fc4;
+			}
+		}
+	}
+
+	&__icon {
+		width: 42px;
+		height: 42px;
+		flex: 0 0 42px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.16);
+		transition:
+			width 0.15s ease,
+			height 0.15s ease,
+			flex-basis 0.15s ease;
+
+		.dashicons {
+			font-size: 22px;
+			width: 22px;
+			height: 22px;
+		}
+	}
+
+	h1 {
+		margin: 0 0 3px;
+		color: #fff;
+		font-size: 28px;
+		line-height: 1.15;
+		transition:
+			font-size 0.15s ease,
+			margin 0.15s ease;
+		font-weight: 700;
+	}
+
+	p {
+		margin: 0;
+		max-height: 48px;
+		font-size: 16px;
+		line-height: 1.5;
+		opacity: 0.94;
+		overflow: hidden;
+		transition:
+			max-height 0.15s ease,
+			opacity 0.15s ease,
+			margin 0.15s ease;
+	}
+
+	// Applied once admin-settings.js's IntersectionObserver confirms the
+	// header has actually reached the top of the viewport and is stuck there
+	// (not just "the page has scrolled some amount") — the subtitle only
+	// matters on first landing on the page, and dropping it while stuck
+	// claws back real content height on a page this long, letting more of
+	// the form stay visible under the pinned header.
+	&.is-stuck {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		gap: 8px;
+
+		.nanobar-header__btn-label {
+			display: none;
+		}
+
+		.nanobar-header__btn {
+			padding: 0;
+			width: 42px;
+		}
+
+		p {
+			max-height: 0;
+			margin: 0;
+			opacity: 0;
+		}
+
+		.nanobar-header__icon {
+			width: 34px;
+			height: 34px;
+			flex-basis: 34px;
+
+			.dashicons {
+				font-size: 18px;
+				width: 18px;
+				height: 18px;
+			}
+		}
+
+		h1 {
+			margin: 0;
+			font-size: 20px;
+		}
+	}
+}
+
+@media (max-width: 782px) {
+	.nanobar-settings-wrap {
+		margin-top: 10px;
+	}
+
+	.nanobar-header {
+		padding: 16px 18px;
+		border-radius: 10px;
+
+		&__btn-label {
+			display: none;
+		}
+
+		&__btn {
+			padding: 0;
+			width: 42px;
+		}
+
+		&__content {
+			gap: 12px;
+		}
+
+		&__icon {
+			width: 36px;
+			height: 36px;
+			flex-basis: 36px;
+		}
+
+		h1 {
+			font-size: 24px;
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.nanobar-header {
+		padding: 14px 16px;
+
+		h1 {
+			font-size: 22px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.nanobar-header {
+		gap: 10px;
+
+		&__actions {
+			gap: 6px;
+		}
+
+		&__btn {
+			min-width: 40px;
+			width: 40px;
+			height: 40px;
+		}
+	}
+
+	.nanobar-header__icon {
+		width: 32px;
+		height: 32px;
+		flex-basis: 32px;
+		font-size: 16px;
+
+		.dashicons {
+			font-size: 18px;
+		}
+	}
+
+	.nanobar-header h1 {
+		font-size: 20px;
+		margin-bottom: 2px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nanobar-header,
+	.nanobar-header * {
+		transition: none !important;
+	}
+}
+
+// Stuck on a wide screen: everything on one line — icon + title on the left,
+// the section nav in the middle, status and buttons on the right. The top row
+// wrapper dissolves (`display: contents`) so its two halves and the nav can be
+// laid out as siblings. Narrower screens keep the two-row header, where one
+// line wouldn't leave the nav any room: with the WordPress menu open, the
+// header is about 220px narrower than the viewport, and the nav needs ~610px
+// next to the title and the buttons (more while "Unsaved changes" shows), so
+// below ~1320px it would be squeezed and cut at both ends.
+@media (min-width: 1320px) {
+	.nanobar-header.is-stuck {
+		flex-direction: row;
+		align-items: center;
+		gap: 20px;
+
+		.nanobar-header__top {
+			display: contents;
+		}
+
+		.nanobar-header__content {
+			flex: 0 0 auto;
+
+			// Invisible while stuck, but still as wide as its single line
+			// of text, which squeezed the nav to zero width and pushed the
+			// buttons out of the header: take it out of the layout.
+			p {
+				display: none;
+			}
+		}
+
+		// DOM order is content, actions, nav: put the nav in the middle.
+		.nanobar-nav {
+			flex: 1 1 auto;
+			order: 1;
+			min-width: 0;
+			// Not `justify-content: center`: in a scrollable flex container
+			// that clips the links that overflow on the start side, with no
+			// way to scroll back to them. Auto margins on the ends center the
+			// links when they fit and fall back to start-aligned when not.
+			justify-content: flex-start;
+
+			// Tighter pills: the nav shares the line with the title and the buttons.
+			a {
+				padding-inline: 10px;
+			}
+
+			a:first-child {
+				margin-inline-start: auto;
+			}
+
+			a:last-child {
+				margin-inline-end: auto;
+			}
+		}
+
+		.nanobar-header__actions {
+			order: 2;
+		}
+	}
+}

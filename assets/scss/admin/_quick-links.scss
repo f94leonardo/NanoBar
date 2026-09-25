@@ -1,0 +1,345 @@
+// Block: .nanobar-quick-links — the repeater on the "Quick links" card. Each
+// .nanobar-quick-link-row is printed server-side
+// (Settings\Page::render_quick_link_row()) for an already-saved link, or
+// cloned client-side from the hidden #nanobar-quick-link-template by the
+// "Add link" button (admin-settings.js). Rows are reordered by dragging their
+// handle (jQuery UI sortable). Also holds the .nanobar-pill role chips.
+
+@use "variables" as v;
+
+.nanobar-quick-links {
+	display: flex;
+	flex-direction: column;
+	gap: v.$space-md;
+
+	&:not(:empty) {
+		margin-bottom: v.$space-md;
+	}
+
+	// Empty-state box shown while there are no rows (toggled by admin-settings.js).
+	&__empty {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: v.$space-xs;
+		margin-bottom: v.$space-md;
+		padding: v.$space-2xl v.$space-lg;
+		border: 1px dashed v.$nanobar-admin-border-hover;
+		border-radius: v.$radius-tile;
+		background: #fbfbfc;
+		color: v.$nanobar-admin-text-muted;
+		font-size: 13px;
+		text-align: center;
+
+		&[hidden] {
+			display: none;
+		}
+
+		.dashicons {
+			width: 28px;
+			height: 28px;
+			font-size: 28px;
+			color: v.$nanobar-admin-border-hover;
+		}
+
+		strong {
+			font-size: 15px;
+			color: v.$nanobar-admin-text;
+		}
+	}
+}
+
+.nanobar-quick-link-row {
+	display: flex;
+	flex-direction: column;
+	gap: v.$space-md;
+	padding: v.$space-md v.$space-lg;
+	border: 1px solid v.$nanobar-admin-border;
+	border-radius: v.$radius-tile;
+	background: #fff;
+	transition: border-color 0.15s ease;
+
+	&.has-errors {
+		border-color: v.$nanobar-admin-error;
+	}
+
+	// The row being dragged, and the gap it leaves behind.
+	&.ui-sortable-helper {
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+	}
+
+	&--placeholder {
+		border: 2px dashed v.$nanobar-admin-accent;
+		background: rgba(v.$nanobar-admin-accent, 0.06);
+		visibility: visible !important;
+	}
+}
+
+// handle | icon | label | URL | remove
+.nanobar-quick-link-row__main {
+	display: grid;
+	grid-template-columns: 20px 44px minmax(0, 2fr) minmax(0, 3fr) 36px;
+	align-items: start;
+	gap: v.$space-md;
+}
+
+.nanobar-quick-link-row__handle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 44px;
+	color: v.$nanobar-admin-border-hover;
+	cursor: grab;
+	transition: color 0.15s ease;
+
+	&:hover {
+		color: v.$nanobar-admin-text-muted;
+	}
+
+	&:active {
+		cursor: grabbing;
+	}
+}
+
+.nanobar-quick-link-row__field {
+	min-width: 0;
+}
+
+// Opens the shared icon picker overlay (see .nanobar-icon-picker) — an
+// icon-only square, since only the hidden [data-quick-link-icon-input] beside
+// it is actually submitted; the icon's name is its tooltip/accessible name.
+.nanobar-quick-link-row__icon-trigger {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1px solid v.$nanobar-admin-control-border;
+	border-radius: v.$radius-control;
+	background: #fff;
+	color: v.$nanobar-admin-text;
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease;
+
+	&:hover,
+	&:focus-visible {
+		border-color: v.$nanobar-admin-accent;
+		background: rgba(v.$nanobar-admin-accent, 0.06);
+		outline: none;
+	}
+}
+
+.nanobar-quick-link-row__icon-preview {
+	font-size: 22px;
+	width: 22px;
+	height: 22px;
+}
+
+// Shared by the label and URL fields' errors — populated/toggled by
+// admin-settings.js (renderQuickLinkRowErrors()), never printed with text
+// server-side.
+.nanobar-quick-link-row__error {
+	margin: v.$space-xs 0 0;
+	font-size: 12px;
+	color: v.$nanobar-admin-error;
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+.nanobar-quick-link-row__remove {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	border-radius: v.$radius-control;
+	background: none;
+	color: v.$nanobar-admin-text-muted;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		color 0.15s ease;
+
+	&:hover,
+	&:focus-visible {
+		background: rgba(v.$nanobar-admin-error, 0.1);
+		color: v.$nanobar-admin-error;
+	}
+
+	.dashicons {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+	}
+}
+
+// Second line: who sees the link, as toggle pills.
+.nanobar-quick-link-row__roles {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: v.$space-sm;
+	padding-top: v.$space-md;
+	border-top: 1px solid #f0f0f1;
+}
+
+.nanobar-quick-link-row__roles-label {
+	margin-right: v.$space-xs;
+	font-size: 13px;
+	font-weight: 600;
+	color: v.$nanobar-admin-text-muted;
+}
+
+.nanobar-quick-link-row__roles-divider {
+	align-self: stretch;
+	width: 1px;
+	margin: 0 v.$space-xs;
+	background: v.$nanobar-admin-border;
+}
+
+// Always-visible text rather than an icon + tooltip: a tooltip near the
+// row's right edge kept getting clipped on narrow screens.
+.nanobar-quick-link-row__roles-hint {
+	margin-left: auto;
+	font-size: 12px;
+	font-style: italic;
+	color: v.$nanobar-admin-text-muted;
+}
+
+// Toggle pill (role or "Visible on mobile"): the checkbox is hidden and the
+// pill itself shows the state.
+.nanobar-pill {
+	display: inline-flex;
+	position: relative;
+	cursor: pointer;
+
+	&__input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	&__text {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 4px v.$space-md;
+		border: 1px solid v.$nanobar-admin-border;
+		border-radius: 999px;
+		background: #fff;
+		color: v.$nanobar-admin-text;
+		font-size: 13px;
+		line-height: 1.4;
+		transition:
+			background 0.15s ease,
+			border-color 0.15s ease,
+			color 0.15s ease;
+
+		.dashicons {
+			width: 14px;
+			height: 14px;
+			font-size: 14px;
+		}
+	}
+
+	&:hover &__text {
+		border-color: v.$nanobar-admin-border-hover;
+		background: #f6f7f7;
+	}
+
+	&__input:checked + &__text {
+		border-color: v.$nanobar-admin-accent;
+		background: rgba(v.$nanobar-admin-accent, 0.1);
+		color: v.$nanobar-admin-accent;
+		font-weight: 600;
+	}
+
+	&__input:focus-visible + &__text {
+		outline: 2px solid v.$nanobar-admin-accent;
+		outline-offset: 2px;
+	}
+}
+
+// The dashed "Add link" button under the list.
+.nanobar-add-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: v.$space-sm;
+	width: 100%;
+	min-height: 44px;
+	border: 1px dashed v.$nanobar-admin-control-border;
+	border-radius: v.$radius-tile;
+	background: none;
+	color: v.$nanobar-admin-accent;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease;
+
+	&:hover,
+	&:focus-visible {
+		border-color: v.$nanobar-admin-accent;
+		background: rgba(v.$nanobar-admin-accent, 0.06);
+	}
+
+	&:disabled {
+		border-color: v.$nanobar-admin-border;
+		background: none;
+		color: v.$nanobar-admin-text-muted;
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
+	.dashicons {
+		width: 18px;
+		height: 18px;
+		font-size: 18px;
+	}
+}
+
+.nanobar-quick-links-summary-error {
+	margin: 0 0 v.$space-md;
+	padding: 10px v.$space-md;
+	border: 1px solid rgba(v.$nanobar-admin-error, 0.3);
+	border-radius: v.$radius-control;
+	background: rgba(v.$nanobar-admin-error, 0.08);
+	color: v.$nanobar-admin-error;
+	font-size: 14px;
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+// The hidden <template> the repeater clones from must never render, even
+// though some very old browsers ignore <template>'s implicit hiding.
+#nanobar-quick-link-template {
+	display: none;
+}
+
+@media (max-width: 600px) {
+	// handle | icon | label | remove, with the URL on its own line below.
+	.nanobar-quick-link-row__main {
+		grid-template-columns: 20px 44px minmax(0, 1fr) 36px;
+		row-gap: v.$space-sm;
+	}
+
+	.nanobar-quick-link-row__field--url {
+		grid-column: 2 / -1;
+	}
+
+	.nanobar-quick-link-row__roles-hint {
+		margin-left: 0;
+		flex-basis: 100%;
+	}
+}

@@ -1,0 +1,323 @@
+// Block: .nanobar-viewport — the live preview: a mock page with the toggle
+// button at its configured position and (optionally) the open panel, or, in
+// the "Mobile" view, the compact bottom bar. admin-settings.js fills
+// .nanobar-mock-panel / .nanobar-mock-tabbar from the form's current values.
+
+@use "variables" as v;
+
+.nanobar-preview-container {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: v.$space-md;
+}
+
+.nanobar-preview-help {
+	margin: 0;
+}
+
+.nanobar-viewport {
+	// Panel colors, switched by [data-scheme] (mirrors the real panel's
+	// dark default / light override).
+	--nb-mock-bg: #1d2327;
+	--nb-mock-fg: #f0f0f1;
+	--nb-mock-hover: rgba(255, 255, 255, 0.09);
+	--nb-mock-sep: rgba(255, 255, 255, 0.14);
+
+	position: relative;
+	flex: 1 1 auto;
+	display: flex;
+	min-height: 360px;
+	padding: 18px;
+	border: 1px solid v.$nanobar-admin-border;
+	border-radius: 14px;
+	background: #f0f0f1;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+	overflow: hidden;
+
+	&[data-scheme="light"] {
+		--nb-mock-bg: #fff;
+		--nb-mock-fg: #1d2327;
+		--nb-mock-hover: rgba(0, 0, 0, 0.06);
+		--nb-mock-sep: rgba(0, 0, 0, 0.12);
+	}
+}
+
+// Placeholder page content behind the panel.
+.nanobar-mock-site {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 44px 24px 24px;
+	pointer-events: none;
+
+	span {
+		display: block;
+		height: 10px;
+		border-radius: 5px;
+		background: #dcdcde;
+
+		&:nth-child(1) {
+			width: 55%;
+			height: 16px;
+			background: #c3c4c7;
+		}
+
+		&:nth-child(2) {
+			width: 90%;
+		}
+
+		&:nth-child(3) {
+			width: 80%;
+		}
+
+		&:nth-child(4) {
+			width: 88%;
+		}
+
+		&:nth-child(5) {
+			width: 45%;
+		}
+	}
+}
+
+// Toggle + panel, stacked on the side facing the page (admin-settings.js sets
+// flex-direction / align-items from the chosen position).
+.nanobar-mock {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex: 0 0 auto;
+	gap: 8px;
+}
+
+.nanobar-preview-button {
+	flex: 0 0 auto;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+	cursor: pointer;
+	transition:
+		width 0.2s ease,
+		height 0.2s ease,
+		background 0.2s ease;
+
+	&:focus-visible {
+		outline: 2px solid v.$nanobar-admin-accent;
+		outline-offset: 3px;
+	}
+}
+
+.nanobar-mock-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 190px;
+	padding: 6px;
+	border-radius: 9px;
+	background: var(--nb-mock-bg);
+	color: var(--nb-mock-fg);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+
+	&.is-closed {
+		display: none;
+	}
+
+	&.is-icons-only {
+		min-width: 0;
+	}
+
+	&.is-empty {
+		padding: 12px 14px;
+		font-size: 13px;
+		opacity: 0.85;
+	}
+}
+
+.nanobar-mock-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 32px;
+	padding: 4px 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	white-space: nowrap;
+
+	.dashicons {
+		flex: 0 0 auto;
+		width: 18px;
+		height: 18px;
+		font-size: 18px;
+	}
+
+	.is-icons-only & span:not(.dashicons) {
+		display: none;
+	}
+
+	&:hover {
+		background: var(--nb-mock-hover);
+	}
+
+	&--sep {
+		margin-top: 4px;
+		padding-top: 6px;
+		border-top: 1px solid var(--nb-mock-sep);
+		border-radius: 0;
+	}
+}
+
+// Phone bottom bar (or top bar, when the toggle sits at the top).
+.nanobar-mock-tabbar {
+	position: absolute;
+	left: 8px;
+	right: 8px;
+	z-index: 1;
+	display: none;
+	gap: 2px;
+	padding: 6px;
+	border-radius: 12px;
+	background: var(--nb-mock-bg);
+	color: var(--nb-mock-fg);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+
+	&[data-edge="bottom"] {
+		bottom: 10px;
+	}
+
+	&[data-edge="top"] {
+		top: 34px;
+	}
+
+	.nanobar-mock-tab {
+		flex: 1 1 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2px;
+		min-width: 0;
+		padding: 5px 2px;
+		font-size: 9px;
+		line-height: 1.2;
+		text-align: center;
+
+		span:not(.dashicons) {
+			max-width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.dashicons {
+			width: 18px;
+			height: 18px;
+			font-size: 18px;
+		}
+	}
+
+	&.is-empty {
+		justify-content: center;
+		padding: 12px;
+		font-size: 12px;
+	}
+}
+
+// Position spots: one per allowed place, sitting exactly where the real
+// button would be (same 18px inset as the viewport padding; the size follows
+// the toggle size, set as --nanobar-toggle-size by admin-settings.js). They
+// are the radio buttons of the position picker; the current one is invisible
+// because the real button covers it.
+.nanobar-mock-spots {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+
+	.nanobar-position-cell {
+		position: absolute;
+		width: var(--nanobar-toggle-size, 32px);
+		height: var(--nanobar-toggle-size, 32px);
+		padding: 0;
+		border: 2px dashed rgba(29, 35, 39, 0.4);
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.55);
+		cursor: pointer;
+		pointer-events: auto;
+		transition:
+			background 0.15s ease,
+			border-color 0.15s ease;
+
+		&[data-pos-h="left"] {
+			left: 18px;
+		}
+
+		&[data-pos-h="center"] {
+			left: calc(50% - var(--nanobar-toggle-size, 32px) / 2);
+		}
+
+		&[data-pos-h="right"] {
+			right: 18px;
+		}
+
+		&[data-pos-v="top"] {
+			top: 18px;
+		}
+
+		&[data-pos-v="bottom"] {
+			bottom: 18px;
+		}
+
+		&:focus-visible {
+			outline: 2px solid v.$nanobar-admin-accent;
+			outline-offset: 3px;
+		}
+
+		&:hover:not([disabled]) {
+			border-color: v.$nanobar-admin-accent;
+			background: rgba(v.$nanobar-admin-accent, 0.16);
+		}
+
+		&[aria-checked="true"] {
+			border-color: transparent;
+			background: transparent;
+		}
+
+		// "Center" on the wrong edge: still drawn (its title says why it is
+		// off) but clearly out of play.
+		&[disabled] {
+			border-style: dotted;
+			border-color: rgba(29, 35, 39, 0.2);
+			background: transparent;
+			cursor: not-allowed;
+		}
+	}
+}
+
+// Phone view — after the base rules it overrides, so it can be a plain
+// higher-specificity block. A narrow, tall frame; the dropdown is replaced by
+// the tab bar.
+.nanobar-viewport[data-device="mobile"] {
+	.nanobar-mock-spots {
+		display: none;
+	}
+
+	flex: 0 0 auto;
+	width: 250px;
+	max-width: 100%;
+	min-height: 440px;
+	border: 6px solid v.$nanobar-admin-text;
+	border-radius: 28px;
+
+	.nanobar-mock {
+		display: none;
+	}
+
+	.nanobar-mock-tabbar {
+		display: flex;
+	}
+}

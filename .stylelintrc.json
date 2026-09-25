@@ -1,0 +1,27 @@
+{
+	"extends": "@wordpress/stylelint-config/scss",
+	"rules": {
+		"selector-class-pattern": [
+			"^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$",
+			{
+				"message": "Usa kebab-case, opzionalmente con BEM (__elem, --mod)"
+			}
+		],
+		"rule-empty-line-before": [
+			"always",
+			{
+				"ignore": ["after-comment", "first-nested"]
+			}
+		],
+		"at-rule-empty-line-before": [
+			"always",
+			{
+				"except": ["blockless-after-blockless"],
+				"ignore": ["after-comment", "first-nested"],
+				"ignoreAtRules": ["else"]
+			}
+		],
+		"scss/comment-no-empty": null,
+		"value-keyword-case": null
+	}
+}
