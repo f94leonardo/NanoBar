@@ -119,8 +119,34 @@
 			stuckObserver.observe(headerSentinel);
 		}
 
-		$(window).on('resize', updateStickyOffsets);
+		// Marks which edge of the (horizontally scrollable) section nav still
+		// has links out of view, for the fade in _header.scss.
+		var navEl = $navLinks.length ? $navLinks[0].parentNode : null;
+		function updateNavFade() {
+			if (!navEl) {
+				return;
+			}
+			var max = navEl.scrollWidth - navEl.clientWidth;
+			$(navEl)
+				.toggleClass('has-more-start', max > 1 && navEl.scrollLeft > 1)
+				.toggleClass(
+					'has-more-end',
+					max > 1 && navEl.scrollLeft < max - 1
+				);
+		}
+		if (navEl) {
+			$(navEl).on('scroll', updateNavFade);
+			if (window.ResizeObserver) {
+				new window.ResizeObserver(updateNavFade).observe(navEl);
+			}
+		}
+
+		$(window).on('resize', function () {
+			updateStickyOffsets();
+			updateNavFade();
+		});
 		updateStickyOffsets();
+		updateNavFade();
 		if ($navLinks.length) {
 			updateNavCurrent();
 		}

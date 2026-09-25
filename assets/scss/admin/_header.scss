@@ -181,6 +181,30 @@ html:has(.nanobar-settings-wrap) {
 			display: none;
 		}
 
+		// Fades the edge(s) where more links are hidden (classes set by
+		// admin-layout.js), so a clipped link reads as "scroll", not "broken".
+		&.has-more-end {
+			mask-image: linear-gradient(
+				to right,
+				#000 calc(100% - 28px),
+				transparent
+			);
+		}
+
+		&.has-more-start {
+			mask-image: linear-gradient(to right, transparent, #000 28px);
+		}
+
+		&.has-more-start.has-more-end {
+			mask-image: linear-gradient(
+				to right,
+				transparent,
+				#000 28px,
+				#000 calc(100% - 28px),
+				transparent
+			);
+		}
+
 		a {
 			flex: 0 0 auto;
 			padding: 6px 14px;
@@ -306,6 +330,11 @@ html:has(.nanobar-settings-wrap) {
 	.nanobar-header {
 		padding: 16px 18px;
 		border-radius: 10px;
+
+		// The six links need ~610px; tighter pills let them fit at 651px.
+		.nanobar-nav a {
+			padding-inline: 10px;
+		}
 
 		&__btn-label {
 			display: none;
